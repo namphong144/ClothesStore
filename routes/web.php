@@ -33,19 +33,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//=========================ADMIN========================
+Route::prefix('admin')->group(function () {
+
+    Route::get('/', [DashboardController::class, 'index']);
+
+    Route::resource('/user', UserController::class);
+});
 
 //=========================CLIENT========================
+//home
 Route::get('/', [ClientController::class, 'home'])->name('homepage');
+
+//shop
 Route::get('/shop', [ClientController::class, 'shop'])->name('shop');
 Route::get('/shop/{slug}', [ClientController::class, 'category'])->name('danh-muc');
+
+//product
 Route::get('/shop/san-pham/{slug}', [ClientController::class, 'product'])->name('san-pham');
 
- //search
- Route::get('/tim-kiem', [ClientController::class, 'timkiem'])->name('tim-kiem');
+//search
+Route::get('/tim-kiem', [ClientController::class, 'timkiem'])->name('tim-kiem');
 
- //blog
- Route::get('/blogs', [ClientController::class, 'blog'])->name('blogs');
- Route::get('/blogs/{slug}', [ClientController::class, 'blog_detail'])->name('blog-detail');
+//blog
+Route::get('/blogs', [ClientController::class, 'blog'])->name('blogs');
+Route::get('/blogs/{slug}', [ClientController::class, 'blog_detail'])->name('blog-detail');
 
-  //contact
-  Route::get('/contact', [ClientController::class, 'contact'])->name('contact');
+//contact
+Route::get('/contact', [ClientController::class, 'contact'])->name('contact');

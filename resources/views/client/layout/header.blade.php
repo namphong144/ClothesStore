@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
-                            <button type="button" class="category-btn">Tất cả sản phẩm</button>
+                            <button type="button" class="category-btn">All Clothes</button>
                             <div class="input-group">
                                 <input type="text" placeholder="What do you need?">
                                 <button type="button"><i class="ti-search"></i></button>
@@ -115,7 +115,7 @@
                 <div class="nav-depart">
                     <div class="depart-btn">
                         <i class="ti-menu"></i>
-                        <span>All Departments</span>
+                        <span>Tất cả sản phẩm</span>
                         <ul class="depart-hover">
                         <li class="active"><a href="#">Women's Clothing</a></li>
                         <li><a href="#">Men Clothing</a></li>
