@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('brand_id')->unsigned();
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->string('name');
+            $table->string('slug');
             $table->text('description');
             $table->timestamps();
         });

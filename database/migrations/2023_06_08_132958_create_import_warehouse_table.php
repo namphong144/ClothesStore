@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->bigInteger('admin_id')->unsigned();
-            $table->foreign('admin_id')->references('id')->on('admin');
+            $table->foreign('admin_id')->references('id')->on('users');
 
             $table->bigInteger('warehouse_id')->unsigned();
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
