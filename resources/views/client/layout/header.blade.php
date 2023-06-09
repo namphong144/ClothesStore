@@ -14,7 +14,21 @@
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="login.html" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    @if (Auth::user())
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle login-panel" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                  document.getElementById('logout-form').submit();">
+                      {{ Auth::user()->name }}
+                      
+                    </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+
+                    @else
+                    <a href="{{ route('login') }}" class="login-panel"><i class="fa fa-user"></i> Login</a>
+                    @endif
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                         <option value="yt" data-image="front/img/flag-1.jpg" data-imagecss="flag yt"
@@ -142,7 +156,7 @@
                                 <li><a href="faq.html">Faq</a></li>    
                                 <li><a href="register.html">Register</a></li>  
                                 <li><a href="login.html">Login</a></li>                  
-                    </ul>
+                            </ul>
                         </li>
                     </ul>
                 </nav>

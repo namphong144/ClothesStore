@@ -29,9 +29,9 @@ use App\Http\Controllers\ProductCategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 //=========================ADMIN========================
 Route::prefix('admin')->group(function () {
@@ -61,3 +61,6 @@ Route::get('/blogs/{slug}', [ClientController::class, 'blog_detail'])->name('blo
 
 //contact
 Route::get('/contact', [ClientController::class, 'contact'])->name('contact');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
