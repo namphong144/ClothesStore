@@ -170,7 +170,7 @@ body a:hover{
 					</div>
 					 <div class="col-md-8 market-update-left">
                       <h4>Đơn hàng</h4> 
-					<h3>{{$order_ht}}</h3>
+					<h3>23</h3>
 				  </div>
 				  <div class="clearfix"> </div>
 				</div>
@@ -182,7 +182,7 @@ body a:hover{
 					</div>
 					<div class="col-md-8 market-update-left">
 					<h4>Sản phẩm</h4>
-						<h3>{{$product}}</h3>
+						<h3>12</h3>
 					</div>
 				  <div class="clearfix"> </div>
 				</div>
@@ -194,7 +194,7 @@ body a:hover{
 					</div>
 					<div class="col-md-8 market-update-left">
 						<h4>Doanh thu hôm nay</h4>
-						<h3>{{number_format(substr($revenue_today, 34, -3)).',000'}}<sup>đ</sup></h3>
+						<h3>23000<sup>đ</sup></h3>
 					</div>
 				  <div class="clearfix"> </div>
 				</div>
@@ -206,7 +206,7 @@ body a:hover{
 					</div>
 					<div class="col-md-8 market-update-left">
 						<h4>Lợi nhuận hôm nay</h4>
-						<h3>{{number_format(substr($profit_today, 36, -3)).',000'}}<sup>đ</sup></h3>
+						<h3>21000<sup>đ</sup></h3>
 					</div>
 				  <div class="clearfix"> </div>
 				</div>
@@ -219,7 +219,7 @@ body a:hover{
   <div class="panel panel-defalt">
     <div class="panel-heading"><h2>Đơn hàng mới</h2></div>
   </div>
-  <div class="table-responsive">
+  {{-- <div class="table-responsive">
     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
         <thead>
             <tr class="table-primary">
@@ -313,5 +313,5 @@ body a:hover{
             
         </tbody>
     </table>
-</div>
+</div> --}}
 @endsection

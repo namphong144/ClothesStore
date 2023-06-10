@@ -144,7 +144,7 @@
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li class="{{ request()->is('/') ? 'active' : '' }}"><a href="{{route('homepage')}}">Trang chủ</a></li>
+                        <li class="{{ request()->is('/', 'home') ? 'active' : '' }}"><a href="{{route('homepage')}}">Trang chủ</a></li>
                         <li class="{{ request()->is('shop', 'shop/*','list-cart', 'check-out', 'history-purchase', 'history-detail/*') ? 'active' : '' }}"><a href="{{route('shop')}}">Shop</a></li>
                         <li class="{{ request()->is('blogs', 'blogs/*') ? 'active' : '' }}"><a href="{{route('blogs')}}">Blog</a></li>
                         <li class="{{ request()->is('contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Liên hệ</a></li>

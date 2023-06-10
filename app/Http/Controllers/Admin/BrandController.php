@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class BrandController extends Controller
 {
@@ -46,19 +47,16 @@ class BrandController extends Controller
         $data = $request->validate(
             [
                 'name' => 'required|unique:brands|max:255',
-                'slug' => 'required|unique:brands|max:255',
             ],
             [
                 'name.required' => 'Tên thương hiệu bắt buộc phải nhập.',
                 'name.max' => 'Tên thương hiệu chỉ dài tối đa 255 kí tự.',
                 'name.unique' => 'Tên thương hiệu đã tồn tại.',
-                'slug.unique' => 'Slug thương hiệu đã tồn tại.',
             ]
         );
 
         $brand = new Brand();
         $brand->name = $data['name'];
-        $brand->slug = $data['slug'];
         $brand->save();
         toastr()->success('Thành công', 'Thêm thương hiệu thành công.');
         return redirect()->route('brand.index');
@@ -103,7 +101,6 @@ class BrandController extends Controller
         $data = $request->validate(
             [
                 'name' => 'required|max:255',
-                'slug' => 'required|max:255',
             ],
             [
                 'name.required' => 'Tên thương hiệu bắt buộc phải nhập.',
@@ -113,7 +110,6 @@ class BrandController extends Controller
 
         $brand = Brand::find($id);
         $brand->name = $data['name'];
-        $brand->slug = $data['slug'];
         $brand->save();
         toastr()->success('Thành công', 'Cập nhật thương hiệu thành công.');
         return redirect()->route('brand.index');
@@ -130,12 +126,11 @@ class BrandController extends Controller
         //
         $brand = Brand::find($id);
 
-        if($category->product){
-            $product = Product::whereIn('brand_id', [$brand->id])->delete();
-    }
+    //     if($category->product){
+    //         $product = Product::whereIn('brand_id', [$brand->id])->delete();
+    // }
         $brand->delete();
         toastr()->info('Thành công', 'Xóa thương hiệu thành công.');
         return redirect()->back();
     }
 }
-

@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SizeController;
+use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\BrandController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ProductController;
@@ -16,7 +17,7 @@ use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Client\CheckoutController;
-use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\Admin\ProductCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +35,19 @@ use App\Http\Controllers\ProductCategoryController;
 // });
 
 //=========================ADMIN========================
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::get('/', [DashboardController::class, 'index']);
 
     Route::resource('/user', UserController::class);
+
+    Route::resource('/category', ProductCategoryController::class);
+
+    Route::resource('/brand', BrandController::class);
+
+    Route::resource('/size', SizeController::class);
+
+    Route::resource('/color', ColorController::class);
 });
 
 //=========================CLIENT========================
@@ -63,4 +72,4 @@ Route::get('/blogs/{slug}', [ClientController::class, 'blog_detail'])->name('blo
 Route::get('/contact', [ClientController::class, 'contact'])->name('contact');
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
