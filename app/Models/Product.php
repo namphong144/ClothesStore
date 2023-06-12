@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\ProductDetail;
+use App\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    public $timestamps = false;
     use HasFactory;
 
     protected $table = 'products';
@@ -20,11 +22,7 @@ class Product extends Model
     }
 
     public function productCategory(){
-        return $this->belongsTo(ProductCategory::class, 'product_category_id', 'id');
-    }
-
-    public function manufacturer(){
-        return $this->belongsTo(Manufacturer::class, 'manufacturer_id', 'id');
+        return $this->belongsTo(ProductCategory::class, 'category_id', 'id');
     }
 
     public function productImage(){
@@ -41,9 +39,5 @@ class Product extends Model
 
     public function orderDetail(){
         return $this ->HasMany(OrderDetail::class, 'product_id', 'id');
-    }
-
-    public function product_size(){
-        return $this ->HasMany(Product_Size::class, 'product_id', 'id');
     }
 }

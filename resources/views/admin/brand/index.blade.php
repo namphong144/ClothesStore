@@ -49,6 +49,7 @@
                             <tr class="table-primary">
                                 <th class="text-center">ID</th>
                                 <th>Tên thương hiệu</th>
+                                <th>Trạng thái</th>
                                 <th class="text-center">Hành động</th>
                             </tr>
                         </thead>
@@ -63,6 +64,11 @@
                                                 <div class="widget-heading">{{$brand->name}}</div>
                                             </div>
                                         </div>
+                                    </div>
+                                </td>
+                                <td class="text-left">
+                                    <div class="badge badge-success">
+                                        {{$brand->status ? 'Ẩn':'Hiển thị'}}
                                     </div>
                                 </td>
                                 <td class="text-center">

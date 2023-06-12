@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Size;
+use App\Models\Color;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SizeController extends Controller
+class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,11 @@ class SizeController extends Controller
     public function index()
     {
         //
-        $list = Size::orderBy('id','DESC')->get();
-        return view('admin.size.index', compact('list'));
+        $list = Color::orderBy('id','DESC')->get();
+        return view('admin.color.index', compact('list'));
+       
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -28,7 +30,7 @@ class SizeController extends Controller
     public function create()
     {
         //
-        return view('admin.size.form');
+        return view('admin.color.form');
     }
 
     /**
@@ -42,21 +44,23 @@ class SizeController extends Controller
         //
         $data = $request->validate(
             [
-                'name' => 'required|unique:product_categories|max:255',
+                'name' => 'required|unique:colors|max:255',
+                'status' => 'required',
             ],
             [
-                'name.required' => 'Tên danh mục bắt buộc phải nhập.',
-                'name.max' => 'Tên danh mục chỉ dài tối đa 255 kí tự.',
-                'name.unique' => 'Tên danh mục đã tồn tại.', 
+                'name.required' => 'Tên màu sắc bắt buộc phải nhập.',
+                'name.max' => 'Tên màu sắc chỉ dài tối đa 255 kí tự.',
+                'name.unique' => 'Tên màu sắc đã tồn tại.',
             ]
         );
 
-        $size = new Size();
-        $size->name = $data['name'];
-        $size->status = $request->status == true ? '0':'1';
-        $size->save();
-        toastr()->success('Thành công', 'Thêm size thành công.');
-        return redirect()->route('size.index');
+        $color = new Color();
+        $color->name = $data['name'];
+        $color->status = $data['status'];
+        $color->save();
+        toastr()->success('Thành công', 'Thêm màu sắc thành công.');
+        return redirect()->route('color.index');
+       
     }
 
     /**
@@ -79,9 +83,9 @@ class SizeController extends Controller
     public function edit($id)
     {
         //
-        $size = Size::find($id);
-        $list = Size::orderBy('id','DESC')->get();
-        return view('admin.size.form', compact('list','size'));
+        $color = Color::find($id);
+        $list = Color::orderBy('id','ASC')->get();
+        return view('admin.color.form', compact('list','color'));
     }
 
     /**
@@ -97,19 +101,20 @@ class SizeController extends Controller
         $data = $request->validate(
             [
                 'name' => 'required|max:255',
+                'status' => 'required',
             ],
             [
-                'name.required' => 'Tên size bắt buộc phải nhập.',
-                'name.max' => 'Tên size chỉ dài tối đa 255 kí tự.',
+                'name.required' => 'Tên màu sắc bắt buộc phải nhập.',
+                'name.max' => 'Tên màu sắc chỉ dài tối đa 255 kí tự.',
             ]
         );
 
-        $size = Size::find($id);
-        $size->name = $data['name'];
-        $size->status = $request->status == true ? '0':'1';
-        $size->save();
-        toastr()->success('Thành công', 'Cập nhật size thành công.');
-        return redirect()->route('size.index');
+        $color = Color::find($id);
+        $color->name = $data['name'];
+        $color->status = $data['status'];
+        $color->save();
+        toastr()->success('Thành công', 'Cập nhật màu sắc thành công.');
+        return redirect()->route('color.index');
     }
 
     /**
@@ -121,9 +126,9 @@ class SizeController extends Controller
     public function destroy($id)
     {
         //
-        $size = Size::find($id);
-        $size->delete();
-        toastr()->info('Thành công', 'Xóa size thành công.');
+        $color = Color::find($id);
+        $color->delete();
+        toastr()->info('Thành công', 'Xóa màu sắc thành công.');
         return redirect()->back();
     }
 }

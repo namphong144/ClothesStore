@@ -46,6 +46,7 @@ class ProductCategoryController extends Controller
         [
             'name' => 'required|max:255',
             'slug' => 'required|max:255',
+            'status' => 'required',
         ],
         [
             'name.required' => 'Tên danh mục bắt buộc phải nhập.',
@@ -55,6 +56,7 @@ class ProductCategoryController extends Controller
         $category = new ProductCategory();
         $category->name = $data['name'];
         $category->slug = $data['slug'];
+        $category->status = $data['status'];
         $category->save();
         toastr()->success('Thành công', 'Thêm danh mục thành công.');
         return redirect()->route('category.index');
@@ -99,6 +101,7 @@ class ProductCategoryController extends Controller
             [
                 'name' => 'required|max:255',
                 'slug' => 'required|max:255',
+                'status' => 'required',
             ],
             [
                 'name.required' => 'Tên danh mục bắt buộc phải nhập.',
@@ -109,6 +112,7 @@ class ProductCategoryController extends Controller
         $category = ProductCategory::find($id);
         $category->name = $data['name'];
         $category->slug = $data['slug'];
+        $category->status = $data['status'];
         $category->save();
         toastr()->success('Thành công', 'Cập nhật danh mục thành công.');
         return redirect()->route('category.index');

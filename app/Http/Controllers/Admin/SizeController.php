@@ -18,7 +18,9 @@ class SizeController extends Controller
         //
         $list = Size::orderBy('id','DESC')->get();
         return view('admin.size.index', compact('list'));
+       
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -29,6 +31,7 @@ class SizeController extends Controller
     {
         //
         return view('admin.size.form');
+ 
     }
 
     /**
@@ -42,20 +45,23 @@ class SizeController extends Controller
         //
         $data = $request->validate(
             [
-                'size_name' => 'required|unique:sizes|max:255',
+                'name' => 'required|unique:sizes|max:255',
+                'status' => 'required',
             ],
             [
-                'size_name.required' => 'Tên size bắt buộc phải nhập.',
-                'size_name.max' => 'Tên size chỉ dài tối đa 255 kí tự.',
-                'size_name.unique' => 'Tên size đã tồn tại.', 
+                'name.required' => 'Tên size bắt buộc phải nhập.',
+                'name.max' => 'Tên size chỉ dài tối đa 255 kí tự.',
+                'name.unique' => 'Tên size đã tồn tại.',
             ]
         );
 
         $size = new Size();
-        $size->name = $data['size_name'];
+        $size->name = $data['name'];
+        $size->status = $data['status'];
         $size->save();
         toastr()->success('Thành công', 'Thêm size thành công.');
         return redirect()->route('size.index');
+       
     }
 
     /**
@@ -79,7 +85,7 @@ class SizeController extends Controller
     {
         //
         $size = Size::find($id);
-        $list = Size::orderBy('id','DESC')->get();
+        $list = Size::orderBy('id','ASC')->get();
         return view('admin.size.form', compact('list','size'));
     }
 
@@ -95,16 +101,18 @@ class SizeController extends Controller
         //
         $data = $request->validate(
             [
-                'size_name' => 'required|max:255',
+                'name' => 'required|max:255',
+                'status' => 'required',
             ],
             [
-                'size_name.required' => 'Tên size bắt buộc phải nhập.',
-                'size_name.max' => 'Tên size chỉ dài tối đa 255 kí tự.',
+                'name.required' => 'Tên size bắt buộc phải nhập.',
+                'name.max' => 'Tên size chỉ dài tối đa 255 kí tự.',
             ]
         );
 
         $size = Size::find($id);
-        $size->name = $data['size_name'];
+        $size->name = $data['name'];
+        $size->status = $data['status'];
         $size->save();
         toastr()->success('Thành công', 'Cập nhật size thành công.');
         return redirect()->route('size.index');

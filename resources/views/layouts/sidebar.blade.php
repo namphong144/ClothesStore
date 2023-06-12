@@ -94,11 +94,11 @@
                         </a>
                     </li>
 
-                    {{-- <li class="{{ request()->is('admin/size') ? 'mm-active' : '' }}">
+                    <li class="{{ request()->is('admin/size') ? 'mm-active' : '' }}">
                         <a href="{{route('color.index')}}">
                             <i class="metismenu-icon fa fa-i-cursor"></i>Color
                         </a>
-                    </li> --}}
+                    </li>
 
                     <li class="{{ request()->is('admin/slider') ? 'mm-active' : '' }}">
                         <a href="">
@@ -113,17 +113,18 @@
                         </a>
                         <ul>
                             <li class="{{ request()->is('admin/product/*') ? 'mm-active' : '' }}">
-                                <a href="">
+                                <a href="{{route('product.create')}}">
                                     <i class="metismenu-icon"></i>Thêm sản phẩm
                                 </a>
                             </li>
                             <li class="{{ request()->is('admin/product') ? 'mm-active' : '' }}">
-                                <a href="">
+                                <a href="{{route('product.index')}}">
                                     <i class="metismenu-icon"></i>Liệt kê sản phẩm
                                 </a>
                             </li>
                         </ul>
                     </li>
+                    
                     <li class="{{ request()->is('admin/order') ? 'mm-active' : '' }}">
                         <a href="">
                             <i class="metismenu-icon fa fa-shopping-cart"></i>Đơn hàng <span class="badge badge-danger">12 <sup>new</sup></span>

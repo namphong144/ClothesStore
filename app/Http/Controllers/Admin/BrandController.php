@@ -47,6 +47,7 @@ class BrandController extends Controller
         $data = $request->validate(
             [
                 'name' => 'required|unique:brands|max:255',
+                'status' => 'required',
             ],
             [
                 'name.required' => 'Tên thương hiệu bắt buộc phải nhập.',
@@ -57,6 +58,7 @@ class BrandController extends Controller
 
         $brand = new Brand();
         $brand->name = $data['name'];
+        $brand->status = $data['status'];
         $brand->save();
         toastr()->success('Thành công', 'Thêm thương hiệu thành công.');
         return redirect()->route('brand.index');
@@ -101,6 +103,7 @@ class BrandController extends Controller
         $data = $request->validate(
             [
                 'name' => 'required|max:255',
+                'status' => 'required',
             ],
             [
                 'name.required' => 'Tên thương hiệu bắt buộc phải nhập.',
@@ -110,6 +113,7 @@ class BrandController extends Controller
 
         $brand = Brand::find($id);
         $brand->name = $data['name'];
+        $brand->status = $data['status'];
         $brand->save();
         toastr()->success('Thành công', 'Cập nhật thương hiệu thành công.');
         return redirect()->route('brand.index');

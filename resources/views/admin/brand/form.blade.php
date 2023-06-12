@@ -51,6 +51,15 @@
                             </div>
                         </div>
 
+                        <div class="position-relative row form-group">
+                            <div class="col-md-3 text-md-right col-form-label">
+                                {!! Form::label('status', 'Trạng thái', []) !!}
+                            </div>
+                            <div class="col-md-9 col-xl-8">
+                                {!! Form::select('status', ['0'=>'Hiển thị','1'=>'Không hiển thị'], isset($color) ? $color->status : '', ['class'=>'form-control']) !!}
+                            </div>
+                        </div>
+
                         <div class="position-relative row form-group mb-1">
                             <div class="col-md-9 col-xl-8 offset-md-2">
                                 <a href="{{route('brand.index')}}" class="border-0 btn btn-outline-danger mr-1">

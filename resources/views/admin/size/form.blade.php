@@ -10,7 +10,7 @@
                     <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                 Size
+                   Size
                     <div class="page-title-subheading">
                        Xem, tạo, cập nhật, xóa và quản lý
                     </div>
@@ -41,13 +41,22 @@
 
                             @csrf
                         <div class="position-relative row form-group">
-                            <label for="name" class="col-md-3 text-md-right col-form-label">Size</label>
+                            <label for="name" class="col-md-3 text-md-right col-form-label">Tên</label>
                             <div class="col-md-9 col-xl-8">
                                 <input name="name" id="slug" placeholder="Tên size" type="text"
                                     class="form-control" value="{{isset($size) ? $size->name : ''}}">
                                     @error('name')
                                     <small class="text-danger">{{$message}}</small>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <div class="col-md-3 text-md-right col-form-label">
+                                {!! Form::label('status', 'Trạng thái', []) !!}
+                            </div>
+                            <div class="col-md-9 col-xl-8">
+                                {!! Form::select('status', ['0'=>'Hiển thị','1'=>'Không hiển thị'], isset($size) ? $size->status : '', ['class'=>'form-control']) !!}
                             </div>
                         </div>
 

@@ -23,7 +23,6 @@ return new class extends Migration
 
             $table->bigInteger('size_id')->unsigned();
             $table->foreign('size_id')->references('id')->on('sizes');
-            $table->string('image');
             $table->integer('quantity');
             $table->timestamps();
         });
