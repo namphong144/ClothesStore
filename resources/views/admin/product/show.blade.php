@@ -80,14 +80,6 @@
 
                     <div class="position-relative row form-group">
                         <label for="brand_id"
-                            class="col-md-3 text-md-right col-form-label">Quản lý chi tiết</label>
-                        <div class="col-md-9 col-xl-8">
-                            <p><a href="/admin/product/{{$product->id}}/detail">Quản lý chi tiết</a></p>
-                        </div>
-                    </div>
-
-                    <div class="position-relative row form-group">
-                        <label for="brand_id"
                             class="col-md-3 text-md-right col-form-label">Thương hiệu</label>
                         <div class="col-md-9 col-xl-8">
                             <p> {{$product->brand->name, $product->id}}</p>

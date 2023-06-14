@@ -84,6 +84,18 @@
                                  </div>
                             </div>
 
+                            <div class="position-relative row form-group">
+                                <div class="col-md-3 text-md-right col-form-label">
+                                    {!! Form::label('quantity', 'Số lượng', []) !!}
+                                </div>  
+                                <div class="col-md-9 col-xl-8">
+                                    {!! Form::number('quantity', isset($product) ? $product->quantity : '', ['class'=>'form-control','placeholder'=>'...','min'=>'0']) !!}
+                                    @error('quantity')
+                                    <small class="text-danger">{{$message}}</small>
+                                    @enderror
+                                 </div>
+                            </div>
+
                         <div class="position-relative row form-group">
                             <div class="col-md-3 text-md-right col-form-label">
                                 {!! Form::label('status', 'Trạng thái', []) !!}

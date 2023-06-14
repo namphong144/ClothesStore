@@ -131,14 +131,9 @@
                         <i class="ti-menu"></i>
                         <span>Tất cả sản phẩm</span>
                         <ul class="depart-hover">
-                        <li class="active"><a href="#">Women's Clothing</a></li>
-                        <li><a href="#">Men Clothing</a></li>
-                        <li><a href="#">Underwear</a></li>
-                        <li><a href="#">Kid's Clothing</a></li>
-                        <li><a href="#">Brand Coalean</a></li>
-                        <li><a href="#">Accessories/Shoes</a></li>
-                        <li><a href="#">Luxury Brands</a></li>
-                        <li><a href="#">Brand Outdoor Apparel</a></li>
+                            @foreach ($category as $key=>$cate)
+                            <li><a href="{{route('danh-muc', $cate->slug)}}">{{$cate->name}}</a></li>
+                            @endforeach
                     </ul>
                     </div>
                 </div>

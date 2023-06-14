@@ -56,14 +56,6 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     //image product
     Route::resource('/product/{product_id}/image', ProductImageController::class);
 
-    //product detail
-    Route::resource('/product/{product_id}/detail', ProductDetailController::class);
-
-    //tap phim
-    Route::resource('productdetail', ProductDetailController::class);
-    Route::get('select-product', [ProductDetailController::class, 'select_product'])->name('select-product');
-    //them tap phim trong list phim
-    Route::get('add-detail/{id}', [ProductDetailController::class, 'add_detail'])->name('add-detail');
 });
 
 //=========================CLIENT========================
@@ -86,6 +78,9 @@ Route::get('/blogs/{slug}', [ClientController::class, 'blog_detail'])->name('blo
 
 //contact
 Route::get('/contact', [ClientController::class, 'contact'])->name('contact');
-Auth::routes();
 
+
+
+//-----------auth-----------
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Auth::routes();

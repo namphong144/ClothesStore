@@ -64,6 +64,7 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required',
             'status' => 'required',
+            'quantity' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',
         ],
@@ -80,6 +81,7 @@ class ProductController extends Controller
         $product->name = $data['name'];
         $product->slug = $data['slug'];
         $product->price = $data['price'];
+        $product->quantity = $data['quantity'];
         $product->category_id = $data['category_id'];
         $product->brand_id = $data['brand_id'];
         $product->status = $data['status'];
@@ -155,6 +157,7 @@ class ProductController extends Controller
             'status' => 'required',
             'description' => 'required',
             'price' => 'required',
+            'quantity' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',
         ],
@@ -171,6 +174,7 @@ class ProductController extends Controller
         $product->name = $data['name'];
         $product->slug = $data['slug'];
         $product->price = $data['price'];
+        $product->quantity = $data['quantity'];
         $product->category_id = $data['category_id'];
         $product->brand_id = $data['brand_id'];
         $product->status = $data['status'];

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->double('price');
+            $table->integer('quantity');
             $table->integer('status');
             $table->text('description');
             $table->timestamps();

@@ -5,7 +5,7 @@
 </style>
 <form action="shop">
     <div class="filter-widget">
-        <h4 class="fw-title">Categories</h4>
+        <h4 class="fw-title">Danh mục</h4>
         <ul class="filter-catagories">
             @foreach ($category as $key=>$cate)
             <li><a href="{{route('danh-muc', $cate->slug)}}">{{$cate->name}}</a></li>
@@ -13,7 +13,7 @@
         </ul>
     </div>
     <div class="filter-widget">
-        <h4 class="fw-title">Brand</h4>
+        <h4 class="fw-title">Thương hiệu</h4>
         <div class="fw-brand-check">
             @foreach ($brand as $key=>$bra)
             <div class="bc-item">
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="filter-widget">
-        <h4 class="fw-title">Price</h4>
+        <h4 class="fw-title">Giá</h4>
         <div class="filter-range-wrap">
             <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
             <input type="hidden" id="start_price" name="start_price">
