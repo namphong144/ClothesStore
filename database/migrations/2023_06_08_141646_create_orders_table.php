@@ -21,12 +21,8 @@ return new class extends Migration
             $table->bigInteger('shipping_id')->unsigned();
             $table->foreign('shipping_id')->references('id')->on('shipping');
 
-            $table->bigInteger('payment_id')->unsigned();
-            $table->foreign('payment_id')->references('id')->on('payment');
-
-            $table->string('order_total');
             $table->string('order_status');
-            $table->timestamp('buy_at');
+            $table->string('order_code',50);
             $table->timestamps();
         });
     }

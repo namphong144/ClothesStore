@@ -1,4 +1,4 @@
-@extends('client.layout.layout')
+ @extends('client.layout.layout')
 @section('title', 'Homepage')
 @section('body')
           <!-- BODY END-->
@@ -12,7 +12,7 @@
                         <div class="col-lg-5">
                             <span>Bag, kids</span>
                             <h1>Black Friday</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                                 dolore magna aliqua.</p>
                                 <a href="#" class="primary-btn">Shop now</a>
                         </div>
@@ -28,7 +28,7 @@
                         <div class="col-lg-5">
                             <span>Bag, kids</span>
                             <h1>Black Friday</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                                 dolore magna aliqua.</p>
                                 <a href="#" class="primary-btn">Shop now</a>
                         </div>
@@ -73,7 +73,7 @@
         </div>
       </div>
 
-    <!-- women bannner section-->  
+    <!-- women bannner section-->
     <section class="women-banner spad">
         <div class="container-fluid">
             <div class="row">
@@ -87,8 +87,16 @@
                     <div class="filter-control p-2 text-dark" style="--bs-bg-opacity: .5;background-color: #d9ecf0">
                       <h2>THỜI TRANG NỮ</h2>
                     </div>
-                    <div class="product-slider owl-carousel"> 
+                    <div class="product-slider owl-carousel">
+
                         @foreach ($product_nu as $key=>$nu)
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$nu->id}}" class="cart_product_id_{{$nu->id}}">
+                                <input type="hidden" value="{{$nu->name}}" class="cart_product_name_{{$nu->id}}">
+                                <input type="hidden" value="{{$nu->productImage[0]->path}}" class="cart_product_image_{{$nu->id}}">
+                                <input type="hidden" value="{{$nu->price}}" class="cart_product_price_{{$nu->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$nu->id}}">
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src={{asset('uploads/product/'.$nu->productImage[0]->path)}} alt="">
@@ -96,7 +104,7 @@
                                     <i class="icon_heart_alt"></i>
                                 </div>
                                 <ul>
-                                    <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
+                                    <li class="w-icon active"><button type="button" class="btn btn-warning add-to-cart" data-id_product="{{$nu->id}}"><i class="icon_bag_alt" ></i></button></li>
                                     <li class="quick-view"><a href="{{route('san-pham', $nu->slug)}}">+ Xem chi tiết</a></li>
                                     <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
                                 </ul>
@@ -107,19 +115,21 @@
                                     <h5>{{$nu->name}}</h5>
                                 </a>
                                 <div class="product-price">
-                                    {{$nu->price}}.000 <sup>đ</sup>
+                                    {{number_format($nu->price,0,',','.')}}đ
                                 </div>
                             </div>
                         </div>
+                            </form>
                         @endforeach
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
- <!-- end women bannner section--> 
+ <!-- end women bannner section-->
 
-    <!-- deal of the week-->  
+    <!-- deal of the week-->
     <section class="deal-of-week set-bg spad" data-setbg="front/img/time-bg.jpg">
         <div class="container">
             <div class="col-lg-6 text-center">
@@ -155,7 +165,7 @@
         </div>
     </section>
 
-     <!--men bannner section--> 
+     <!--men bannner section-->
    <section class="men-banner spad">
         <div class="container-fluid spad">
             <div class="row">
@@ -163,7 +173,7 @@
                     <div class="filter-control p-2 text-dark" style="--bs-bg-opacity: .5;background-color: #d9ecf0">
                       <h2>THỜI TRANG NAM</h2>
                     </div>
-                    <div class="product-slider owl-carousel"> 
+                    <div class="product-slider owl-carousel">
                         @foreach ($product_nam as $key=>$nu)
                         <div class="product-item">
                             <div class="pi-pic">
@@ -198,7 +208,7 @@
                 </div>
             </div>
         </div>
-    </section>  
+    </section>
 
      <!--Instagram section-->
      <div class="instagram-photo">
@@ -264,11 +274,11 @@
                                     <i class="fa fa-comment-o"></i>
                                     5
                                 </div>
-                            </div>  
+                            </div>
                             <a href="">
                                 <h4>The Best Street Style London CedeLean Week</h4>
-                            </a>  
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>                
+                            </a>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                         </div>
                     </div>
                 </div>
@@ -285,11 +295,11 @@
                                     <i class="fa fa-comment-o"></i>
                                     5
                                 </div>
-                            </div>  
+                            </div>
                             <a href="">
                                 <h4>The Best Street Style London CedeLean Week</h4>
-                            </a>  
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>                
+                            </a>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                         </div>
                     </div>
                 </div>
@@ -306,11 +316,11 @@
                                     <i class="fa fa-comment-o"></i>
                                     5
                                 </div>
-                            </div>  
+                            </div>
                             <a href="">
                                 <h4>The Best Street Style London CedeLean Week</h4>
-                            </a>  
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>                
+                            </a>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                         </div>
                     </div>
                 </div>

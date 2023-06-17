@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('shipping_name');
             $table->string('shipping_address');
-            $table->string('email');
-            $table->integer('shipping_number');
-            $table->string('notes');
+            $table->string('shipping_email');
+            $table->integer('shipping_phone');
+            $table->string('shipping_notes');
+            $table->integer('shipping_method');
             $table->timestamps();
         });
     }

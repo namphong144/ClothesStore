@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-          <!--Breadcrumb section end-->  
+          <!--Breadcrumb section end-->
 
         <!-- Product Shop Section Begin-->
         <div class="product-shop spad page-details">
@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         @include('client.layout.sidebar')
-                     
+
                     </div>
                     <div class="col-lg-9">
                         <div class="row">
@@ -64,25 +64,25 @@
                                         <div class="pd-desc">
                                             <p></p>
                                             <h4>
-                                                {{number_format($product->price).',000'}}<sup>đ</sup>     
+                                                {{number_format($product->price,0,',','.')}}đ
                                             </h4>
                                         </div>
                                         {{-- <div class="pd-size-choose">
                                             @foreach ($product->product_size as $si)
                                             @if ($si->quantity == 0)
                                             <div class="sc-item">
-                                                
+
                                                 <input type="radio" name="size_id" value="{{$si->id}}" id="sm-{{$si->size->name}}">
                                                 <label class="sizeSelectLabel" for="sm-{{$si->size->name}}" aria-disabled="true" style="
                                                     color: rgba(0,0,0,.26);
                                                     cursor: not-allowed;">{{$si->size->name}}
                                                 </label>
-                                            </div> 
+                                            </div>
                                             @else
                                             <div class="sc-item">
-                                               
+
                                                 <input type="radio" name="size_id" value="{{$si->id}}" id="sm-{{$si->size->name}}">
-                                                <label class="sizeSelectLabel" for="sm-{{$si->size->name}}" aria-disabled="false">{{$si->size->name}} 
+                                                <label class="sizeSelectLabel" for="sm-{{$si->size->name}}" aria-disabled="false">{{$si->size->name}}
                                                 </label>
                                             </div>
                                             @endif
@@ -93,9 +93,9 @@
                                                 <input type="text" name="qty" id="" value="1">
                                             </div>
                                             <input type="hidden" name="product_id_hidden" id="" value="{{$product->id}}">
-                                          
+
                                             <button type="submit" class="primary-btn pd-card">Thêm vào giỏ hàng</button>
-                                       
+
                                         </div>
                                         <ul class="pd-tags">
                                             <li><span>DANH MỤC</span>: {{$product->productCategory->name}}</li>
@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
                                 </form>
-                            </div>  
+                            </div>
                         </div>
                         <div class="product-tab">
                             <div class="tab-item">
@@ -159,10 +159,10 @@
                                                 <tr>
                                                     <td class="p-catagory">Số lượng sản phẩm</td>
                                                     <td>
-                                                        <div class="p-stock"> 
-                                                            {{$product->quantity}} &nbsp; 
+                                                        <div class="p-stock">
+                                                            {{$product->quantity}} &nbsp;
                                                     </td>
-                                                </tr> 
+                                                </tr>
                                             </table>
                                         </div>
                                     </div>
@@ -267,7 +267,7 @@
                                     <h5>{{$related->name}}</h5>
                                 </a>
                                 <div class="product-price">
-                                    {{number_format($related->price).',000'}}<sup>đ</sup>     
+                                    {{number_format($related->price).',000'}}<sup>đ</sup>
                                 </div>
                             </div>
                         </div>

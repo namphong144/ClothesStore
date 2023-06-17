@@ -69,6 +69,22 @@ Route::get('/shop/{slug}', [ClientController::class, 'category'])->name('danh-mu
 //product
 Route::get('/shop/san-pham/{slug}', [ClientController::class, 'product'])->name('san-pham');
 
+//coupon
+Route::post('/check-coupon',[CartController::class, 'check_coupon']);
+
+//cart
+Route::post('/add-cart-ajax', [CartController::class, 'add_cart_ajax'])->name('add-to-cart');
+Route::get('/cart', [CartController::class, 'show_cart'])->name('show-cart');
+Route::post('/update-cart',[CartController::class, 'update_cart'])->name('update-cart');
+Route::get('/delete-product/{session_id}', [CartController::class,'delete_product']);
+Route::get('/delete-all-product',[CartController::class, 'delete_all_product']);
+Route::get('/show-cart',[CartController::class,'show_cart_header']);
+Route::get('/hover-cart',[CartController::class,'hover_cart']);
+
+//checkout
+Route::get('/checkout',[CheckoutController::class,'show_checkout']);
+Route::post('/confirm-order',[CheckoutController::class,'confirm_order']);
+
 //search
 Route::get('/tim-kiem', [ClientController::class, 'timkiem'])->name('tim-kiem');
 

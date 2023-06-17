@@ -50,7 +50,7 @@
                                         <option value="{{Request::url()}}?sort_by=giamdan">Cao đến thấp</option>
                                     </select>
                                 </form>
-                            
+
                             </div>
                         </div>
                         <div class="col-lg-5 col-md-5 text-right">
@@ -80,7 +80,7 @@
                                         <h5>{{$prod->name}}</h5>
                                     </a>
                                     <div class="product-price">
-                                        {{number_format($prod->price).',000'}}<sup>đ</sup>     
+                                        {{number_format($prod->price,0,',','.')}}đ
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
         $( "#slider-range" ).slider({
       orientation: "horizontal",
       range: true,
-      min: {{$min_price}}, 
+      min: {{$min_price}},
       max: {{$max_price}},
       values: [ {{$min_price}}, {{$max_price}} ],
       slide: function( event, ui ) {

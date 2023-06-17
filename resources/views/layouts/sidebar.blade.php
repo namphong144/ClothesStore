@@ -68,7 +68,6 @@
                         </ul>
                     </li>
 
-
                     <li>
                         <a href="#">
                             <i class="metismenu-icon fa fa-flag"></i>Thương hiệu
@@ -87,7 +86,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <li class="{{ request()->is('admin/size') ? 'mm-active' : '' }}">
                         <a href="{{route('size.index')}}">
                             <i class="metismenu-icon fa fa-i-cursor"></i>Size
@@ -105,7 +104,7 @@
                             <i class="metismenu-icon fa fa-i-cursor"></i>Slider
                         </a>
                     </li>
-                    
+
                     <li>
                         <a href="#">
                             <i class="metismenu-icon fa fa-universal-access"></i>Sản phẩm
@@ -124,7 +123,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <li class="{{ request()->is('admin/order') ? 'mm-active' : '' }}">
                         <a href="">
                             <i class="metismenu-icon fa fa-shopping-cart"></i>Đơn hàng <span class="badge badge-danger">12 <sup>new</sup></span>
@@ -174,7 +173,7 @@
         <div class="app-wrapper-footer">
             <div class="app-footer">
                 <div class="app-footer__inner">
-                   
+
                     <div class="app-footer-right">
                         <ul class="header-megamenu nav">
                             <li class="nav-item">
