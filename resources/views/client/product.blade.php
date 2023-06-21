@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                               <form action="" method="POST">
+                                <form action="{{route('add-cart')}}" method="POST">
                                 @csrf
                                     <div class="product-details">
                                         <div class="pd-title">
@@ -54,46 +54,27 @@
                                             <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
                                         </div>
                                         <div class="pd-rating">
-                                         <i class="fa fa-star"></i>
+                                            @for ($i=1; $i<=5; $i++)
+                                            @if ($i <= $avg_rating)
                                             <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            @else
                                             <i class="fa fa-star-o"></i>
-                                            <span>(6)</span>
+                                            @endif
+                                        @endfor
+                                            <span>({{count($product->productComment)}})</span>
                                         </div>
                                         <div class="pd-desc">
                                             <p></p>
                                             <h4>
-                                                {{number_format($product->price,0,',','.')}}đ
+                                                {{number_format($product->price).',000'}} <sup>đ</sup>
                                             </h4>
                                         </div>
-                                        {{-- <div class="pd-size-choose">
-                                            @foreach ($product->product_size as $si)
-                                            @if ($si->quantity == 0)
-                                            <div class="sc-item">
-
-                                                <input type="radio" name="size_id" value="{{$si->id}}" id="sm-{{$si->size->name}}">
-                                                <label class="sizeSelectLabel" for="sm-{{$si->size->name}}" aria-disabled="true" style="
-                                                    color: rgba(0,0,0,.26);
-                                                    cursor: not-allowed;">{{$si->size->name}}
-                                                </label>
-                                            </div>
-                                            @else
-                                            <div class="sc-item">
-
-                                                <input type="radio" name="size_id" value="{{$si->id}}" id="sm-{{$si->size->name}}">
-                                                <label class="sizeSelectLabel" for="sm-{{$si->size->name}}" aria-disabled="false">{{$si->size->name}}
-                                                </label>
-                                            </div>
-                                            @endif
-                                            @endforeach
-                                        </div> --}}
                                         <div class="quantity">
                                             <div class="pro-qty">
                                                 <input type="text" name="qty" id="" value="1">
                                             </div>
                                             <input type="hidden" name="product_id_hidden" id="" value="{{$product->id}}">
-
+                                          
                                             <button type="submit" class="primary-btn pd-card">Thêm vào giỏ hàng</button>
 
                                         </div>
@@ -118,7 +99,7 @@
                                 <ul class="nav" role="tablist">
                                     <li><a class="active" href="#tab-1" data-toggle="tab" role="tab">CHI TIẾT SẢN PHẨM</a></li>
                                     <li><a href="#tab-2" data-toggle="tab" role="tab">ĐẶC TẢ SẢN PHẨM</a></li>
-                                    <li><a href="#tab-3" data-toggle="tab" role="tab">BÌNH LUẬN (6)</a></li>
+                                    <li><a href="#tab-3" data-toggle="tab" role="tab">BÌNH LUẬN ({{count($product->productComment)}})</a></li>
                                 </ul>
                             </div>
                             <div class="tab-item-content">
@@ -139,12 +120,14 @@
                                                     <td class="p-catagory">Đánh giá của khách hàng</td>
                                                     <td>
                                                         <div class="pd-rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <span>(6)</span>
+                                                            @for ($i=1; $i<=5; $i++)
+                                                                @if ($i <= $avg_rating)
+                                                                    <i class="fa fa-star"></i>
+                                                                @else
+                                                                    <i class="fa fa-star-o"></i>
+                                                                @endif
+                                                            @endfor
+                                                            <span>({{count($product->productComment)}})</span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -168,8 +151,8 @@
                                     </div>
                                     <div class="tab-pane fade" id="tab-3" role="tabpanel">
                                         <div class="customer-review-option">
-                                            <h4>6 bình luận</h4>
-                                            {{-- <div class="comment-option">
+                                            <h4>{{count($product->productComment)}} bình luận</h4>
+                                            <div class="comment-option">
                                                 @foreach ($product->productComment as $com)
                                                 <div class="co-item">
                                                     <div class="avatar-pic">
@@ -190,40 +173,6 @@
                                                     </div>
                                                 </div>
                                                 @endforeach
-                                            </div> --}}
-                                            <div class="comment-option">
-                                                <div class="co-item">
-                                                    <div class="avatar-pic">
-                                                        <img src="img/product-single/avatar-1.png" alt="">
-                                                    </div>
-                                                    <div class="avatar-text">
-                                                        <div class="at-rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <h5>Brandon Kelley <span>27 Aug 2022</span></h5>
-                                                        <div class="at-reply">Nice !</div>
-                                                    </div>
-                                                </div>
-                                                <div class="co-item">
-                                                    <div class="avatar-pic">
-                                                        <img src="img/product-single/avatar-2.png" alt="">
-                                                    </div>
-                                                    <div class="avatar-text">
-                                                        <div class="at-rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <h5>Brandon Kelley <span>27 Aug 2022</span></h5>
-                                                        <div class="at-reply">Nice !</div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

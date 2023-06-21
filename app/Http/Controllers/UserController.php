@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Models\User;
-use Carbon\Carbon;
-use Storage;
 use File;
+
 use Session;
+use Storage;
+use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -89,17 +90,6 @@ class UserController extends Controller
             $user->password = $data['password']?$request->password:Auth::user()->password;
         }
 
-        $get_image = $request->file('image');
-
-        if($get_image){
-
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.',$get_name_image));
-            $new_image = $name_image.rand(0,9999).'.'.$get_image->getClientOriginalExtension();
-            $get_image->move('uploads/avatar_admin/',$new_image);
-            $user->avatar = $new_image;
-        }
-
         $user->save();
         //toastr()->success('Success', 'Thêm user thành công.');
         return redirect()->route('user.index');
@@ -158,19 +148,6 @@ class UserController extends Controller
         $user->level = $data['level'];
         $user->phone = $data['phone'];
         $user->description = $data['description'];
-        $get_image = $request->file('image');
-
-        if($get_image){
-            // if(file_exists('uploads/avatar_admin/'.$user->avatar)){
-            //     unlink('uploads/avatar_admin/'.$user->avatar);
-            // }else{
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.',$get_name_image));
-            $new_image = $name_image.rand(0,9999).'.'.$get_image->getClientOriginalExtension();
-            $get_image->move('uploads/avatar_admin/',$new_image);
-            $user->avatar = $new_image;
-        //}
-    }
     $user->save();
         //toastr()->success('Success', 'Thêm user thành công.');
         return redirect()->route('user.index');
@@ -186,10 +163,6 @@ class UserController extends Controller
     {
         //
         $user = User::find($id);
-        //xoa anh
-        if(file_exists('uploads/avatar_admin/'.$user->avatar)){
-            unlink('uploads/avatar_admin/'.$user->avatar);
-        }
         $user->delete();
        // toastr()->info('Success', 'Xóa phim thành công.');
         return redirect()->back();

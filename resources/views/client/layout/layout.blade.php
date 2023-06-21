@@ -247,7 +247,7 @@
                 $.getJSON('/json/product.json', function(data){
                    $.each(data, function(key, value){
                       if(value.name.search(expression) != -1){
-                         $('#result').append('<li class="list-group-item" style="cursor:pointer"><img height="30" width="40" src="/uploads/product_des/'+value.image+'">'+value.name+'</li>');
+                         $('#result').append('<li class="list-group-item" style="cursor:pointer"><img height="30" width="40" src="/uploads/product/'+value.image+'">'+value.name+'</li>');
                       }
                    });
                 })

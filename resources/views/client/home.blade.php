@@ -72,6 +72,7 @@
             </div>
         </div>
       </div>
+      <!-- End banner-->
 
     <!-- women bannner section-->
     <section class="women-banner spad">
@@ -90,13 +91,10 @@
                     <div class="product-slider owl-carousel">
 
                         @foreach ($product_nu as $key=>$nu)
-                            <form>
-                                @csrf
-                                <input type="hidden" value="{{$nu->id}}" class="cart_product_id_{{$nu->id}}">
-                                <input type="hidden" value="{{$nu->name}}" class="cart_product_name_{{$nu->id}}">
-                                <input type="hidden" value="{{$nu->productImage[0]->path}}" class="cart_product_image_{{$nu->id}}">
-                                <input type="hidden" value="{{$nu->price}}" class="cart_product_price_{{$nu->id}}">
-                                <input type="hidden" value="1" class="cart_product_qty_{{$nu->id}}">
+                        <form action="{{route('add-cart')}}" method="POST">
+                            @csrf
+                                <input type="hidden" value="{{$nu->id}}" name="product_id_hidden">
+                                <input type="hidden" value="1" name="qty">
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src={{asset('uploads/product/'.$nu->productImage[0]->path)}} alt="">
@@ -104,7 +102,11 @@
                                     <i class="icon_heart_alt"></i>
                                 </div>
                                 <ul>
-                                    <li class="w-icon active"><button type="button" class="btn btn-warning add-to-cart" data-id_product="{{$nu->id}}"><i class="icon_bag_alt" ></i></button></li>
+                                    <li class="w-icon active">
+                                        <button type="submit" class="btn btn-warning add-to-cart">
+                                            <i class="icon_bag_alt" ></i>
+                                        </button>
+                                    </li>
                                     <li class="quick-view"><a href="{{route('san-pham', $nu->slug)}}">+ Xem chi tiết</a></li>
                                     <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
                                 </ul>
@@ -115,7 +117,7 @@
                                     <h5>{{$nu->name}}</h5>
                                 </a>
                                 <div class="product-price">
-                                    {{number_format($nu->price,0,',','.')}}đ
+                                    {{number_format($nu->price).',000'}} <sup>đ</sup>
                                 </div>
                             </div>
                         </div>
@@ -175,6 +177,10 @@
                     </div>
                     <div class="product-slider owl-carousel">
                         @foreach ($product_nam as $key=>$nu)
+                        <form action="{{route('add-cart')}}" method="POST">
+                            @csrf
+                                <input type="hidden" value="{{$nu->id}}" name="product_id_hidden">
+                                <input type="hidden" value="1" name="qty">
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src={{asset('uploads/product/'.$nu->productImage[0]->path)}} alt="">
@@ -182,7 +188,11 @@
                                     <i class="icon_heart_alt"></i>
                                 </div>
                                 <ul>
-                                    <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
+                                    <li class="w-icon active">
+                                        <button type="submit" class="btn btn-warning add-to-cart">
+                                            <i class="icon_bag_alt" ></i>
+                                        </button>
+                                    </li>
                                     <li class="quick-view"><a href="{{route('san-pham', $nu->slug)}}">+ Xem chi tiết</a></li>
                                     <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
                                 </ul>
@@ -197,6 +207,7 @@
                                 </div>
                             </div>
                         </div>
+                    </form>
                         @endforeach
                     </div>
                 </div>
@@ -261,69 +272,27 @@
                 </div>
             </div>
             <div class="row">
+                @foreach ($blog as $key=>$blg)
                 <div class="col-lg-4 col-md-6">
                     <div class="single-latest-blog">
-                        <img src="front/img/latest-1.jpg" alt="">
+                        <a href="{{route('blog-detail', $blg->slug)}}">
+                            <img src="{{asset('uploads/blog/'.$blg->image_cover)}}" alt="blog_image_error" height="280" width="410">
+                        </a>
                         <div class="latest-text">
                             <div class="tag-list">
                                 <div class="tag-item">
                                     <i class="fa fa-calendar-o"></i>
-                                    May, 4, 2022
+                                  {{$blg->updated_at}}
                                 </div>
-                                <div class="tag-item">
-                                    <i class="fa fa-comment-o"></i>
-                                    5
-                                </div>
-                            </div>
-                            <a href="">
-                                <h4>The Best Street Style London CedeLean Week</h4>
-                            </a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>  
+                            <a href="{{route('blog-detail', $blg->slug)}}">
+                                <h4>{{$blg->title}}</h4>
+                            </a>               
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-latest-blog">
-                        <img src="front/img/latest-2.jpg" alt="">
-                        <div class="latest-text">
-                            <div class="tag-list">
-                                <div class="tag-item">
-                                    <i class="fa fa-calendar-o"></i>
-                                    May, 4, 2022
-                                </div>
-                                <div class="tag-item">
-                                    <i class="fa fa-comment-o"></i>
-                                    5
-                                </div>
-                            </div>
-                            <a href="">
-                                <h4>The Best Street Style London CedeLean Week</h4>
-                            </a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-latest-blog">
-                        <img src="front/img/latest-3.jpg" alt="">
-                        <div class="latest-text">
-                            <div class="tag-list">
-                                <div class="tag-item">
-                                    <i class="fa fa-calendar-o"></i>
-                                    May, 4, 2022
-                                </div>
-                                <div class="tag-item">
-                                    <i class="fa fa-comment-o"></i>
-                                    5
-                                </div>
-                            </div>
-                            <a href="">
-                                <h4>The Best Street Style London CedeLean Week</h4>
-                            </a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+               
             </div>
             <div class="benefit-items">
                 <div class="row">
@@ -364,6 +333,8 @@
             </div>
         </div>
      </div>
+
+    <!--End Latter blog section-->
 
         <!-- BODY END-->
 

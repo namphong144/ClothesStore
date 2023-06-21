@@ -14,14 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_details', function (Blueprint $table) {
+            $table->id();
             $table->bigInteger('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders');
-            $table->string('order_code',50);
             $table->bigInteger('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('product_details');
-            $table->string('product_name');
-            $table->float('sell_price');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->float('sell_total');
             $table->integer('sell_quantity');
+            $table->tinyInteger('comment')->default('0')->comment('1=comment, 0=no comment');
             $table->timestamps();
         });
     }

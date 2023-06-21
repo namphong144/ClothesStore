@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone', 13)->nullable();
+            $table->string('address')->nullable();
             $table->tinyInteger('level')->default('0'); //0:user, 1:admin
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

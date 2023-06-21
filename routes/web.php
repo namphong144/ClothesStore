@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BlogController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\BrandController;
@@ -41,6 +41,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
 
     Route::resource('/user', UserController::class);
+    Route::get('/level-choose', [UserController::class, 'level_choose'])->name('level-choose');
 
     Route::resource('/category', ProductCategoryController::class);
 
@@ -55,6 +56,14 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     //image product
     Route::resource('/product/{product_id}/image', ProductImageController::class);
+
+     //blog
+     Route::resource('/blog', BlogController::class);
+
+      //order
+      Route::resource('/order', OrderController::class);
+      //Route::get('/order-choxn', [OrderController::class, 'order_choxn'])->name('order-choxn');
+      Route::get('/status-choose', [OrderController::class, 'orderstatus_choose'])->name('orderst-choose');
 
 });
 
@@ -73,17 +82,25 @@ Route::get('/shop/san-pham/{slug}', [ClientController::class, 'product'])->name(
 Route::post('/check-coupon',[CartController::class, 'check_coupon']);
 
 //cart
-Route::post('/add-cart-ajax', [CartController::class, 'add_cart_ajax'])->name('add-to-cart');
-Route::get('/cart', [CartController::class, 'show_cart'])->name('show-cart');
-Route::post('/update-cart',[CartController::class, 'update_cart'])->name('update-cart');
-Route::get('/delete-product/{session_id}', [CartController::class,'delete_product']);
-Route::get('/delete-all-product',[CartController::class, 'delete_all_product']);
-Route::get('/show-cart',[CartController::class,'show_cart_header']);
-Route::get('/hover-cart',[CartController::class,'hover_cart']);
+Route::post('/add-cart', [CartController::class, 'add_cart'])->name('add-cart');
+Route::get('/list-cart', [CartController::class, 'list_cart'])->name('list-cart');
+Route::post('/update-cart', [CartController::class, 'update_cart'])->name('update-cart');
+Route::delete('/delete-cart', [CartController::class, 'delete_cart'])->name('delete-cart');
+Route::post('/clear-all-cart', [CartController::class, 'clear_all_cart'])->name('clear-all-cart');
 
 //checkout
-Route::get('/checkout',[CheckoutController::class,'show_checkout']);
-Route::post('/confirm-order',[CheckoutController::class,'confirm_order']);
+ Route::get('/check-out', [CheckoutController::class, 'checkout'])->name('check-out');
+ Route::post('/check-out-process', [CheckoutController::class, 'checkout_process'])->name('check-out-process');
+
+ //history purchase
+ Route::get('/history-purchase', [CheckoutController::class, 'history_purchase'])->name('history-purchase');
+ Route::get('/history-detail/{id}', [CheckoutController::class, 'history_detail'])->name('history-detail');
+ Route::put('/client-huy/{id}', [CheckoutController::class, 'client_huy'])->name('client-huy');
+ Route::put('/client-nhan-hang/{id}', [CheckoutController::class, 'client_nhan_hang'])->name('client-nhan-hang');
+
+ //rating
+ Route::get('/danh-gia/{id}', [CheckoutController::class, 'danh_gia'])->name('danh-gia');
+ Route::post('/add-rating/{id}', [CheckoutController::class, 'add_rating'])->name('add-rating');
 
 //search
 Route::get('/tim-kiem', [ClientController::class, 'timkiem'])->name('tim-kiem');

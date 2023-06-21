@@ -12,7 +12,7 @@
                 <div>
                     User
                     <div class="page-title-subheading">
-                        View, create, update, delete and manage.
+                        Xem, tạo, cập nhật, xóa và quản lý
                     </div>
                 </div>
             </div>
@@ -45,29 +45,6 @@
                             {{session('Notification')}}
                         </div>
                         @endif
-                        <div class="position-relative row form-group">
-                            <label for="image"
-                                class="col-md-3 text-md-right col-form-label">Avatar</label>
-                            <div class="col-md-9 col-xl-8">
-                                @if(isset($user))
-                                <img style="height: 200px; cursor: pointer;"
-                                    class="thumbnail rounded-circle" data-toggle="tooltip"
-                                    title="Click to change the image" data-placement="bottom"
-                                    src="{{asset('uploads/avatar_admin/'.$user->avatar)}}" alt="Avatar">
-                                 @else
-                                <img style="height: 200px; cursor: pointer;"
-                                    class="thumbnail rounded-circle" data-toggle="tooltip"
-                                    title="Click to change the image" data-placement="bottom"
-                                    src="{{asset('dashboard/assets/images/add-image-icon.jpg')}}" alt="Avatar">
-                                    @endif
-                                <input name="image" type="file" onchange="changeImg(this)"
-                                    class="image form-control-file" style="display: none;" value="">  
-                                <input type="hidden" name="image_old" value="">
-                                <small class="form-text text-muted">
-                                    Click on the image to change (required)
-                                </small>
-                            </div>
-                        </div>
 
                         <div class="position-relative row form-group">
                             <label for="name" class="col-md-3 text-md-right col-form-label">Name</label>

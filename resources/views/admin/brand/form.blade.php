@@ -56,7 +56,7 @@
                                 {!! Form::label('status', 'Trạng thái', []) !!}
                             </div>
                             <div class="col-md-9 col-xl-8">
-                                {!! Form::select('status', ['0'=>'Hiển thị','1'=>'Không hiển thị'], isset($color) ? $color->status : '', ['class'=>'form-control']) !!}
+                                {!! Form::select('status', ['0'=>'Hiển thị','1'=>'Không hiển thị'], isset($brand) ? $brand->status : '', ['class'=>'form-control']) !!}
                             </div>
                         </div>
 

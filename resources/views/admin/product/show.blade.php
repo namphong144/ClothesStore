@@ -104,6 +104,16 @@
 
                     <div class="position-relative row form-group">
                         <label for="price"
+                            class="col-md-3 text-md-right col-form-label">Giá nhập</label>
+                        <div class="col-md-9 col-xl-8">
+                            <div class="badge badge-secondary mt-2">
+                                <p>{{$product->price_origin}}.000 <sup>đ</sup></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="position-relative row form-group">
+                        <label for="price"
                             class="col-md-3 text-md-right col-form-label">Giá</label>
                         <div class="col-md-9 col-xl-8">
                             <div class="badge badge-danger mt-2">
@@ -112,6 +122,12 @@
                         </div>
                     </div>
 
+                    <div class="position-relative row form-group">
+                        <label for="name" class="col-md-3 text-md-right col-form-label">Số lượng</label>
+                        <div class="col-md-9 col-xl-8">
+                            <p>{{$product->quantity}}</p>
+                        </div>
+                    </div>
 
                     <div class="position-relative row form-group">
                         <label for="description"

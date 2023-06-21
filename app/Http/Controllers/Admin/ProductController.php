@@ -29,6 +29,8 @@ class ProductController extends Controller
         if(!is_dir($path)){
             mkdir($path, 0777, true);
             File::put($path.'product.json', json_encode($list));
+        }else{
+            File::put($path.'product.json', json_encode($list));
         }
         return view('admin.product.index', compact('list', 'category', 'brand'));
        
@@ -62,6 +64,7 @@ class ProductController extends Controller
             'name' => 'required|unique:products|max:255',
             'slug' => 'required|unique:products|max:255',
             'description' => 'required',
+            'price_origin' => 'required',
             'price' => 'required',
             'status' => 'required',
             'quantity' => 'required',
@@ -72,6 +75,7 @@ class ProductController extends Controller
             'name.required' => 'Tên sản phẩm bắt buộc phải nhập.',
             'name.max' => 'Tên sản phẩm chỉ dài tối đa 255 kí tự.',
             'name.unique' => 'Tên sản phẩm đã tồn tại.',
+            'price_origin.required' => 'Giá nhập sản phẩm bắt buộc phải nhập.',
             'price.required' => 'Giá sản phẩm bắt buộc phải nhập.',
             'slug.required' => 'Slug sản phẩm bắt buộc phải nhập.',
             'description.required' => 'Mô tả sản phẩm bắt buộc phải nhập.',
@@ -80,6 +84,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->name = $data['name'];
         $product->slug = $data['slug'];
+        $product->price_origin = $data['price_origin'];
         $product->price = $data['price'];
         $product->quantity = $data['quantity'];
         $product->category_id = $data['category_id'];
@@ -156,6 +161,7 @@ class ProductController extends Controller
             'slug' => 'required',
             'status' => 'required',
             'description' => 'required',
+            'price_origin' => 'required',
             'price' => 'required',
             'quantity' => 'required',
             'category_id' => 'required',
@@ -165,6 +171,7 @@ class ProductController extends Controller
             'name.required' => 'Tên sản phẩm bắt buộc phải nhập.',
             'name.max' => 'Tên sản phẩm chỉ dài tối đa 255 kí tự.',
             'name.unique' => 'Tên sản phẩm đã tồn tại.',
+            'price_origin.required' => 'Giá nhập sản phẩm bắt buộc phải nhập.',
             'price.required' => 'Giá sản phẩm bắt buộc phải nhập.',
             'slug.required' => 'Slug sản phẩm bắt buộc phải nhập.',
             'description.required' => 'Mô tả sản phẩm bắt buộc phải nhập.',
@@ -173,6 +180,7 @@ class ProductController extends Controller
         $product =  Product::find($id);
         $product->name = $data['name'];
         $product->slug = $data['slug'];
+        $product->price_origin = $data['price_origin'];
         $product->price = $data['price'];
         $product->quantity = $data['quantity'];
         $product->category_id = $data['category_id'];

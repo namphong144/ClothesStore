@@ -58,30 +58,72 @@
                     </div>
                     <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
-                            <button type="button" class="category-btn">All Clothes</button>
+                            <button type="button" class="category-btn">All Categories</button>
                             <div class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
+                                <form action="{{route('tim-kiem')}}" method="GET">
+                                    <input id="timkiem" type="text" name="search" placeholder="Tìm kiếm..." autocomplete="off" required>
+                                    <button type="submit"><i class="ti-search"></i></button>
+                                 </form>
+                                 <ul class="list-group" id="result" style="display: none; weight:200px;"></ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 text-right">
                         <ul class="nav-right">
-                            <li class="heart-icon">
-                                <a href="#"><i class="icon_heart_alt"></i>
-                                <span>1</span>
-                            </a>
-                            </li>
                             <li class="cart-icon">
-                                <a href="{{asset('/cart')}}">
+                                <a href="">
                                     <i class="icon_bag_alt"></i>
-                                    <span id="show-cart"></span>
+                                    <span>{{\Cart::getContent()->count()}}</span>
                                 </a>
-                                <span style="margin-top: -30px" id="giohang-hover" class="cart-hover"></span>
+                                <div class="cart-hover">
+                                    <div class="select-items">
+                                        <table>
+                                            <tbody>
+                                                @forelse (\Cart::getContent() as $item)
+                                                <tr>
+                                                    <td class="si-pic"><a href="{{route('san-pham', $item->attributes->slug)}}"><img src="{{asset('uploads/product/'.$item->attributes->image)}}" alt="" style="width:70px;height: 50px;"></a></td>
+                                                    <td class="si-text">
+                                                        <div class="product-selected">
+                                                            <p>{{number_format($item->price).',000'}} <sup>đ</sup> x {{$item->quantity}}</p>
+                                                            <h6>{{$item->name}}</h6>
+                                                        </div>
+                                                    </td>
+                                                    <form class="d-inline" action="{{route('delete-cart')}}" method="POST">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <input type="hidden" value="{{ $item->id }}" name="id">
+                                                        <td class="si-close">
+                                                        <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
+                                                            type="submit" data-toggle="tooltip" title="Delete"
+                                                            data-placement="bottom">
+                                                            <span class="btn-icon-wrapper opacity-8">
+                                                                <i class="ti-close"></i>
+                                                            </span>
+                                                        </button>
+                                                        </td>
+                                                    </form>
+                                                </tr>
+                                                @empty
+                                                <tr>  <th colspan="3"><h4>Không có sản phẩm nào trong giỏ hàng của bạn!</h4></th></tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    @if (!\Cart::getContent()->isEmpty())
+                                    <div class="select-total">
+                                        <span>Tổng:</span>
+                                        <h5>{{number_format(Cart::getSubTotal()).',000'}} <sup>đ</sup></h5>
+                                    </div>
+                                    @endif
+                                    <div class="select-button">
+                                        <a href="{{route('list-cart')}}" class="primary-btn view-card">Giỏ hàng</a>
+                                        <a href="{{route('check-out')}}" class="primary-btn checkout-btn">Thanh toán</a>
+                                    </div>
+                                </div>
                             </li>
-
-
-{{--                            <li class="cart-price">$150.00</li>--}}
+                            @if (!\Cart::getContent()->isEmpty())
+                            <li class="cart-price">{{number_format(Cart::getSubTotal()).',000'}} <sup>đ</sup></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -94,9 +136,9 @@
                         <i class="ti-menu"></i>
                         <span>Tất cả sản phẩm</span>
                         <ul class="depart-hover">
-{{--                            @foreach ($category as $key=>$cate)--}}
-{{--                            <li><a href="{{route('danh-muc', $cate->slug)}}">{{$cate->name}}</a></li>--}}
-{{--                            @endforeach--}}
+                           @foreach ($category as $key=>$cate)
+                           <li><a href="{{route('danh-muc', $cate->slug)}}">{{$cate->name}}</a></li>
+                           @endforeach
                     </ul>
                     </div>
                 </div>
@@ -107,14 +149,24 @@
                         <li class="{{ request()->is('blogs', 'blogs/*') ? 'active' : '' }}"><a href="{{route('blogs')}}">Blog</a></li>
                         <li class="{{ request()->is('contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Liên hệ</a></li>
                         <li><a href="">Trang</a>
-                            <ul class="dropdown">
-                                <li><a href="blog-details.html">Blog Details</a></li>
-                                <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="check-out.html">Checkout</a></li>
-                                <li><a href="faq.html">Faq</a></li>
-                                <li><a href="register.html">Register</a></li>
-                                <li><a href="login.html">Login</a></li>
-                            </ul>
+                            <ul class="dropdown">    
+                                <li><a href="{{route('list-cart')}}">Giỏ hàng</a></li>  
+                                <li><a href="{{route('check-out')}}">Thanh toán</a></li>   
+                                <li><a href="{{route('history-purchase')}}">Account</a></li>   
+                                <li><a href="{{route('register')}}">Đăng ký</a></li>  
+                                @if(!Auth::check())
+                                <li><a href="{{route('login')}}">Đăng nhập</a></li>    
+                                @else
+                                <li><a id="navbarDropdown" class="nav-link" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                              document.getElementById('logout-form').submit();">
+                                 Đăng xuất
+                                </a></li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                                @endif             
+                    </ul>
                         </li>
                     </ul>
                 </nav>

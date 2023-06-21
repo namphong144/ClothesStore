@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Order;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +25,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        $order_new = Order::where('order_status', 0)->count();
+        view()->share([
+            'order_new'=>$order_new
+        ]);
     }
 }

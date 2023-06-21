@@ -2,16 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Payment;
+use App\Models\OrderDetails;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
     use HasFactory;
-    public $timestamps =false;
-    protected $fillable = [
-        'customer_id', 'shipping_id', 'order_status', 'order_code','created_at'
-    ];
-    protected $primaryKey = 'id';
+
     protected $table = 'orders';
+    protected $primaryKey = 'id';
+    protected $guarded = [];
+
+    public function orderDetail(){
+        return $this ->HasMany(OrderDetails::class, 'order_id', 'id');
+    }
+
+    public function payment(){
+        return $this->belongsTo(Payment::class, 'payment_id', 'id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'customer_id', 'id');
+    }
 }

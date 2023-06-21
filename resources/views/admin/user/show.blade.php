@@ -12,7 +12,8 @@
                 <div>
                     User
                     <div class="page-title-subheading">
-                        View, create, update, delete and manage.
+                        Xem, tạo, cập nhật, xóa và quản lý
+                    </div>
                     </div>
                 </div>
             </div>
@@ -47,16 +48,6 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body display_data">
-                    <div class="position-relative row form-group">
-                        <label for="image" class="col-md-3 text-md-right col-form-label">Avatar</label>
-                        <div class="col-md-9 col-xl-8">
-                            <p>
-                                <img style="height: 200px;" class="rounded-circle" data-toggle="tooltip"
-                                    title="Avatar" data-placement="bottom"
-                                    src="{{asset('uploads/avatar_admin/'.$user->avatar)}}" alt="Avatar">
-                            </p>
-                        </div>
-                    </div>
 
                     <div class="position-relative row form-group">
                         <label for="name" class="col-md-3 text-md-right col-form-label">
@@ -71,47 +62,6 @@
                         <label for="email" class="col-md-3 text-md-right col-form-label">Email</label>
                         <div class="col-md-9 col-xl-8">
                             <p>{{$user->email}}</p>
-                        </div>
-                    </div>
-
-                    <div class="position-relative row form-group">
-                        <label for="company_name" class="col-md-3 text-md-right col-form-label">
-                            Company Name
-                        </label>
-                        <div class="col-md-9 col-xl-8">
-                            <p>CodeLean</p>
-                        </div>
-                    </div>
-
-                    <div class="position-relative row form-group">
-                        <label for="country"
-                            class="col-md-3 text-md-right col-form-label">Country</label>
-                        <div class="col-md-9 col-xl-8">
-                            <p>Viet Nam</p>
-                        </div>
-                    </div>
-
-                    <div class="position-relative row form-group">
-                        <label for="street_address" class="col-md-3 text-md-right col-form-label">
-                            Street Address</label>
-                        <div class="col-md-9 col-xl-8">
-                            <p>Mon City, Mỹ Đình 2, Nam Từ Liêm</p>
-                        </div>
-                    </div>
-
-                    <div class="position-relative row form-group">
-                        <label for="postcode_zip" class="col-md-3 text-md-right col-form-label">
-                            Postcode Zip</label>
-                        <div class="col-md-9 col-xl-8">
-                            <p>10000</p>
-                        </div>
-                    </div>
-
-                    <div class="position-relative row form-group">
-                        <label for="town_city" class="col-md-3 text-md-right col-form-label">
-                            Town City</label>
-                        <div class="col-md-9 col-xl-8">
-                            <p>Ha Noi</p>
                         </div>
                     </div>
 
@@ -143,7 +93,7 @@
                                 @if (isset($user->description))
                                 {{$user->description}}
                                 @else
-                                Khong co mo ta
+                                Không có mô tả!
                                 @endif
                             </p>
                         </div>

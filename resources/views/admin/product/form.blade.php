@@ -60,7 +60,7 @@
                                     {!! Form::label('Brand', 'Thương hiệu', []) !!} 
                                 </div>
                                 <div class="col-md-9 col-xl-8">
-                                    {!! Form::select('brand_id', $brand, isset($product) ? $product->brand_id : '', ['class'=>'form-control']) !!}
+                                    {!! Form::select('brand_id', $brand, isset($product) ? $product->brand_id : '') !!}
                                 </div>
                             </div>
                             <div class="position-relative row form-group">
@@ -68,9 +68,21 @@
                                     {!! Form::label('Category', 'Danh mục', []) !!}
                                 </div>
                                  <div class="col-md-9 col-xl-8">
-                                    {!! Form::select('category_id', $category, isset($product) ? $product->category_id : '', ['class'=>'form-control']) !!}
+                                    {!! Form::select('category_id', $category, isset($product) ? $product->category_id : '') !!}
                                 </div>
                              </div>
+
+                             <div class="position-relative row form-group">
+                                <div class="col-md-3 text-md-right col-form-label">
+                                    {!! Form::label('price_origin', 'Giá nhập', []) !!}
+                                </div>  
+                                <div class="col-md-9 col-xl-8">
+                                    {!! Form::number('price_origin', isset($product) ? $product->price_origin : '', ['class'=>'form-control','placeholder'=>'...','min'=>'0']) !!}
+                                    @error('price_origin')
+                                        <small class="text-danger">{{$message}}</small>
+                                    @enderror
+                                </div>
+                            </div>
 
                              <div class="position-relative row form-group">
                                 <div class="col-md-3 text-md-right col-form-label">

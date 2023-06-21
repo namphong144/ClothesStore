@@ -11,7 +11,7 @@
                 <div>
                     User
                     <div class="page-title-subheading">
-                        View, create, update, delete and manage.
+                        Xem, tạo, cập nhật, xóa và quản lý
                     </div>
                 </div>
             </div>
@@ -46,10 +46,10 @@
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th>Full Name</th>
+                                <th>Họ và tên</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Level</th>
-                                <th class="text-center">Actions</th>
+                                <th class="text-center">Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,14 +59,6 @@
                                 <td>
                                     <div class="widget-content p-0">
                                         <div class="widget-content-wrapper">
-                                            <div class="widget-content-left mr-3">
-                                                <div class="widget-content-left">
-                                                    <img width="40" class="rounded-circle"
-                                                        data-toggle="tooltip" title="Image"
-                                                        data-placement="bottom"
-                                                        src="{{asset('uploads/avatar_admin/'.$user->avatar)}}" alt="">
-                                                </div>
-                                            </div>
                                             <div class="widget-content-left flex2">
                                                 <div class="widget-heading">{{$user->name}}</div>
                                             </div>

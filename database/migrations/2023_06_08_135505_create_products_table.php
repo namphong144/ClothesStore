@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->string('name');
             $table->string('slug');
+            $table->double('price_origin');
             $table->double('price');
             $table->integer('quantity');
             $table->integer('status');

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->bigInteger('customer_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('users');
 
-            $table->bigInteger('shipping_id')->unsigned();
-            $table->foreign('shipping_id')->references('id')->on('shipping');
+            $table->bigInteger('payment_id')->unsigned();
+            $table->foreign('payment_id')->references('id')->on('payment');
 
             $table->string('order_status');
             $table->string('order_code',50);

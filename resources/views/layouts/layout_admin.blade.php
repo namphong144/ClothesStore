@@ -291,6 +291,24 @@
             document.getElementById('convert_slug').value = slug;
         }
     </script>
+    
+     <script type="text/javascript">
+        $('.orderst_choose').change(function(){
+          var orderst_val = $(this).val();
+          var order_id = $(this).attr('id');
+          $.ajax({
+                  url: "{{ route('orderst-choose') }}",
+                  method: "GET",
+                  data: {
+                      orderst_val:orderst_val,
+                      order_id:order_id
+                  },
+                  success: function(data) {
+                     alert('Thay đổi thành công!');
+                  }
+              });
+        })
+  </script>
 
      @yield('script')
 </body>

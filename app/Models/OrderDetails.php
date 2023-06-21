@@ -2,21 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\OrderDetails;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class OrderDetails extends Model
 {
     use HasFactory;
-    public $timestamps =false;
-    protected $fillable = [
-       'order_id', 'order_code', 'product_id', 'product_name', 'sell_price', 'sell_quantity'
-    ];
+
     protected $table = 'order_details';
+    protected $primaryKey = 'id';
+    protected $guarded = [];
+    
     public function order(){
-        return $this->belongsTo('App\Models\Order','order_id');
+        return $this->belongsTo(Order::class, 'order_id', 'id');
     }
+
     public function product(){
-        return $this->belongsTo('App\Models\Product','product_id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 }

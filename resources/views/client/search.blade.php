@@ -54,14 +54,7 @@
                             <div class="col-lg-4 col-sm-6">
                                 <div class="product-item">
                                     <div class="pi-pic">
-                                        <img src="{{asset('uploads/product_des/'.$prod->image)}}" alt="" width="100%" height="290px">
-                                        @if ($prod->discount)
-                                        <div class="sale pp-sale">
-                                            {{round(100-($prod->discount/$prod->price*100))}}%
-                                            <br>
-                                            Sale
-                                        </div>
-                                        @endif
+                                        <img src="{{asset('uploads/product/'.$prod->productImage[0]->path)}}" alt="" width="100%" height="290px">
                                         <div class="icon">
                                             <i class="icon_heart_alt"></i>
                                         </div>

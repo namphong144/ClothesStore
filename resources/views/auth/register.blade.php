@@ -61,6 +61,24 @@
                                         </span>
                                     @enderror
                                 </div>
+                                <div class="group-input">
+                                    <label for="pass">Điện thoại *</label>
+                                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+                                    @error('phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="group-input">
+                                    <label for="pass">Điạ chỉ(số nhà, quận, huyện, tỉnh) *</label>
+                                    <input id="address" placeholder="Địa chỉ..." type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address" autofocus>
+                                    @error('address')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                                 <button type="submit" class="site-btn register-btn">ĐĂNG KÝ</button>
                             </form>
                             <div class="switch-login">

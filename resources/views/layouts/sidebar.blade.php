@@ -62,7 +62,7 @@
                             </li>
                             <li class="{{ request()->is('admin/category') ? 'mm-active' : '' }}">
                                 <a href="{{route('category.index')}}">
-                                    <i class="metismenu-icon"></i>Liệt kê danh mục
+                                    <i class="metismenu-icon"></i>Danh sách danh mục
                                 </a>
                             </li>
                         </ul>
@@ -81,29 +81,17 @@
                             </li>
                             <li class="{{ request()->is('admin/brand') ? 'mm-active' : '' }}">
                                 <a href="{{route('brand.index')}}">
-                                    <i class="metismenu-icon"></i>Liệt kê thương hiệu
+                                    <i class="metismenu-icon"></i>Danh sách thương hiệu
                                 </a>
                             </li>
                         </ul>
                     </li>
 
-                    <li class="{{ request()->is('admin/size') ? 'mm-active' : '' }}">
-                        <a href="{{route('size.index')}}">
-                            <i class="metismenu-icon fa fa-i-cursor"></i>Size
-                        </a>
-                    </li>
-
-                    <li class="{{ request()->is('admin/size') ? 'mm-active' : '' }}">
-                        <a href="{{route('color.index')}}">
-                            <i class="metismenu-icon fa fa-i-cursor"></i>Color
-                        </a>
-                    </li>
-
-                    <li class="{{ request()->is('admin/slider') ? 'mm-active' : '' }}">
+                    {{-- <li class="{{ request()->is('admin/slider') ? 'mm-active' : '' }}">
                         <a href="">
                             <i class="metismenu-icon fa fa-i-cursor"></i>Slider
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li>
                         <a href="#">
@@ -118,15 +106,15 @@
                             </li>
                             <li class="{{ request()->is('admin/product') ? 'mm-active' : '' }}">
                                 <a href="{{route('product.index')}}">
-                                    <i class="metismenu-icon"></i>Liệt kê sản phẩm
+                                    <i class="metismenu-icon"></i>Danh sách sản phẩm
                                 </a>
                             </li>
                         </ul>
                     </li>
 
                     <li class="{{ request()->is('admin/order') ? 'mm-active' : '' }}">
-                        <a href="">
-                            <i class="metismenu-icon fa fa-shopping-cart"></i>Đơn hàng <span class="badge badge-danger">12 <sup>new</sup></span>
+                        <a href="{{route('order.index')}}">
+                            <i class="metismenu-icon fa fa-shopping-cart"></i>Đơn hàng <span class="badge badge-danger">{{$order_new}} <sup>new</sup></span>
                         </a>
                     </li>
 
@@ -137,13 +125,13 @@
                         </a>
                         <ul>
                             <li class="{{ request()->is('admin/blog/*') ? 'mm-active' : '' }}">
-                                <a href="">
+                                <a href="{{route('blog.create')}}">
                                     <i class="metismenu-icon"></i>Thêm blog
                                 </a>
                             </li>
                             <li class="{{ request()->is('admin/blog') ? 'mm-active' : '' }}">
-                                <a href="">
-                                    <i class="metismenu-icon"></i>Liệt kê blog
+                                <a href="{{route('blog.index')}}">
+                                    <i class="metismenu-icon"></i>Danh sách blog
                                 </a>
                             </li>
                         </ul>
@@ -156,7 +144,7 @@
                         </a>
                     </li>
                     <li class="{{ request()->is('admin/user') ? 'mm-active' : '' }}">
-                        <a href="">
+                        <a href="{{route('user.index')}}">
                             <i class="metismenu-icon fa fa-user-circle"></i>Admin, User
                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                         </a>
