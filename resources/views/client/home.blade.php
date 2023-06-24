@@ -102,11 +102,6 @@
                                     <i class="icon_heart_alt"></i>
                                 </div>
                                 <ul>
-                                    <li class="w-icon active">
-                                        <button type="submit" class="btn btn-warning add-to-cart">
-                                            <i class="icon_bag_alt" ></i>
-                                        </button>
-                                    </li>
                                     <li class="quick-view"><a href="{{route('san-pham', $nu->slug)}}">+ Xem chi tiết</a></li>
                                     <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
                                 </ul>

@@ -51,7 +51,8 @@
                                             </a>
                                         </td>
                                         <td class="cart-title first-row">
-                                            <h5>{{$item->name}}</h5> 
+                                            <h5>{{$item->name}}</h5>
+                                            <h5>Size: <b>{{$item->attributes->size}}</b></h5>
                                         </td>
                                         <td class="p-price first-row">{{number_format($item->price).',000'}} <sup>đ</sup></td>
                                         <form action="{{route('update-cart')}}" method="POST">
@@ -63,8 +64,9 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <input type="hidden" value="{{ $item->id }}" name="id">
-                                        <td class="close-td first-row">
+                                            <input type="hidden" value="{{ $item->id }}" name="id">
+                                            <input type="hidden" value="{{ $item->attributes->size_id }}" name="size_id">
+                                            <td class="close-td first-row">
                                             <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
                                                 type="submit" data-toggle="tooltip"
                                                 data-placement="bottom">
@@ -72,7 +74,7 @@
                                                     <i class="fa fa-refresh"></i>
                                                 </span>
                                             </button>
-                                        </td>
+                                            </td>
                                         </form>
                                         <td class="total-price first-row">{{number_format($item->quantity * $item->price).',000'}} <sup>đ</sup></td>
                                         <form class="d-inline" action="{{route('delete-cart')}}" method="POST">

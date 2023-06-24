@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('order_id')->references('id')->on('orders');
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
+            $table->string('size');
             $table->float('sell_total');
             $table->integer('sell_quantity');
             $table->tinyInteger('comment')->default('0')->comment('1=comment, 0=no comment');

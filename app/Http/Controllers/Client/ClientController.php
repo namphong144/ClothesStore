@@ -133,7 +133,7 @@ class ClientController extends Controller
     {
         $category = ProductCategory::get();
         $brand = Brand::get(); 
-        $product = Product::with('productCategory','brand', 'productImage')->where('status', 0)->where('slug',$slug)->first();
+        $product = Product::with('productCategory','brand', 'productImage', 'product_size')->where('status', 0)->where('slug',$slug)->first();
         $related_product = Product::with('productCategory')->where('status', 0)->where('category_id',$product->productCategory->id)
         ->orderBy(DB::raw('RAND()'))->whereNotIn('slug',[$slug])->get()->take(4);
         $min_price = Product::min('price');

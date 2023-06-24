@@ -51,7 +51,6 @@
                                 <th class="text-center">ID</th>
                                 <th>Sản phẩm / Thương hiệu</th>
                                 <th class="text-center">Giá</th>
-                                <th class="text-center">Số lượng</th>
                                 <th class="text-center">Trạng thái</th>
                                 <th class="text-center">Hành động</th>
                             </tr>
@@ -85,9 +84,6 @@
                                     <div class="badge badge-danger mt-2">
                                         {{$cate->price}}.000
                                     </div>
-                                </td>
-                                <td class="text-center">
-                                        {{$cate->quantity}}
                                 </td>
                                 <td class="text-center">
                                     <div class="badge badge-success">

@@ -22,7 +22,7 @@
         <form action="{{route('check-out-process')}}" method="POST" class="checkout-form">
             @csrf
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                    
                     <h4>Chi tiết đơn hàng</h4>
                     <div class="row">
@@ -44,7 +44,7 @@
                        </div>
                     </div>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-8">
                    
                     <div class="place-order">
                         <h4>Sản phẩm của bạn</h4>
@@ -58,8 +58,9 @@
                                 <input type="hidden" value="{{$item->quantity}}" name="qty">
                                 <input type="hidden" value="{{$item->attributes->price_origin * $item->quantity}}" name="thanhtien">
                                      <li class="fw-normal">
-                                        <img src="{{asset('uploads/product/'.$item->attributes->image)}}" alt="" width="60px" height="60px">
-                                        {{$item->name}} x {{$item->quantity}} 
+                                            <img src="{{asset('uploads/product/'.$item->attributes->image)}}" alt="" width="60px" height="60px">
+                                            {{$item->name}} x {{$item->quantity}} 
+                                            <br>Size: <b>{{$item->attributes->size}}</b>
                                         <span>{{number_format($item->quantity * $item->price).',000'}} <sup>đ</sup></span>
                                     </li>
                                     @php

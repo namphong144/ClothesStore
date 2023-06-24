@@ -80,6 +80,43 @@
 
                     <div class="position-relative row form-group">
                         <label for="brand_id"
+                            class="col-md-3 text-md-right col-form-label">Quản lý size</label>
+                        <div class="col-md-9 col-xl-8">
+                            <div class="table-responsive">
+                                <div class="container">
+                                    <table class="table align-middle mb-0 table-border table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Size</th>
+                                                <th>Số lượng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($product->product_size as $prodSize)   
+                                            @if ($prodSize->size)                
+                                                <tr class="prod-size-tr">
+                                                    <td>
+                                                        @if ($prodSize->size)
+                                                        {{$prodSize->size->name}}
+                                                        @endif 
+                                                    </td>
+                                                    <td>
+                                                        {{$prodSize->quantity}}
+                                                    </td>
+                                                </tr>
+                                            @else
+                                                <h2>Sản phẩm không tồn tại size!</h2>
+                                            @endif
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="position-relative row form-group">
+                        <label for="brand_id"
                             class="col-md-3 text-md-right col-form-label">Thương hiệu</label>
                         <div class="col-md-9 col-xl-8">
                             <p> {{$product->brand->name, $product->id}}</p>

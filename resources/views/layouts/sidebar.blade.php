@@ -87,11 +87,11 @@
                         </ul>
                     </li>
 
-                    {{-- <li class="{{ request()->is('admin/slider') ? 'mm-active' : '' }}">
-                        <a href="">
-                            <i class="metismenu-icon fa fa-i-cursor"></i>Slider
+                    <li class="{{ request()->is('admin/size') ? 'mm-active' : '' }}">
+                        <a href="{{route('size.index')}}">
+                            <i class="metismenu-icon fa fa-i-cursor"></i>Size
                         </a>
-                    </li> --}}
+                    </li>
 
                     <li>
                         <a href="#">

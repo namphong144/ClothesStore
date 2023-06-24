@@ -69,6 +69,25 @@
                                                 {{number_format($product->price).',000'}} <sup>đ</sup>
                                             </h4>
                                         </div>
+                                        <div class="pd-size-choose">
+                                            @foreach ($product->product_size as $si)
+                                            @if ($si->quantity == 0)
+                                            <div class="sc-item">    
+                                                <input type="radio" name="size_id" value="{{$si->id}}" id="sm-{{$si->size->name}}">
+                                                <label class="sizeSelectLabel" for="sm-{{$si->size->name}}" aria-disabled="true" style="
+                                                    color: rgba(0,0,0,.26);
+                                                    cursor: not-allowed;">{{$si->size->name}}
+                                                </label>
+                                            </div> 
+                                            @else
+                                            <div class="sc-item"> 
+                                                <input type="radio" name="size_id" value="{{$si->id}}" id="sm-{{$si->size->name}}">
+                                                <label class="sizeSelectLabel" for="sm-{{$si->size->name}}" aria-disabled="false">{{$si->size->name}} 
+                                                </label>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        </div>
                                         <div class="quantity">
                                             <div class="pro-qty">
                                                 <input type="text" name="qty" id="" value="1">

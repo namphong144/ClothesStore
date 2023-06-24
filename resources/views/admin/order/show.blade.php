@@ -71,6 +71,7 @@
                                                 </div>
                                                 <div class="widget-content-left flex2">
                                                     <div class="widget-heading">{{$item->product->name}}
+                                                        <br> <i>Size: {{$item->size}}</i>
                                                     </div>
                                                 </div>
                                             </div>

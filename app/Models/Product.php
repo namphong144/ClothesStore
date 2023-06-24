@@ -29,7 +29,7 @@ class Product extends Model
         return $this ->HasMany(ProductImage::class, 'product_id', 'id');
     }
 
-    public function productDetail(){
+    public function product_size(){
         return $this ->HasMany(ProductDetail::class, 'product_id', 'id');
     }
 

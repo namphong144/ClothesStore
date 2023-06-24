@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use File;
+use Storage;
+use App\Models\Size;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use App\Models\ProductDetail;
 use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
-use Storage;
-use File;
 
 class ProductController extends Controller
 {
@@ -18,10 +20,19 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function status_choose(Request $request)
+    {
+        $data = $request->all();
+        $product = Product::find($data['product_id']);
+        $product->status = $data['status_val'];
+        $product->save();
+    } 
+
     public function index()
     {
         //
         $list = Product::with('productCategory', 'brand', 'productImage')->orderBy('updated_at','DESC')->get();
+        $countlist = Product::count('id');
         $category = ProductCategory::pluck('name','id');
         $brand = Brand::pluck('name','id');
         
@@ -32,7 +43,7 @@ class ProductController extends Controller
         }else{
             File::put($path.'product.json', json_encode($list));
         }
-        return view('admin.product.index', compact('list', 'category', 'brand'));
+        return view('admin.product.index', compact('list', 'countlist', 'category', 'brand'));
        
     }
     
@@ -47,7 +58,8 @@ class ProductController extends Controller
         //
         $category = ProductCategory::pluck('name','id');
         $brand = Brand::pluck('name','id');
-        return view('admin.product.form', compact('category', 'brand'));
+        $size = Size::where('status', '0')->get();
+        return view('admin.product.form', compact('category', 'brand', 'size'));
  
     }
 
@@ -67,7 +79,6 @@ class ProductController extends Controller
             'price_origin' => 'required',
             'price' => 'required',
             'status' => 'required',
-            'quantity' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',
         ],
@@ -86,7 +97,6 @@ class ProductController extends Controller
         $product->slug = $data['slug'];
         $product->price_origin = $data['price_origin'];
         $product->price = $data['price'];
-        $product->quantity = $data['quantity'];
         $product->category_id = $data['category_id'];
         $product->brand_id = $data['brand_id'];
         $product->status = $data['status'];
@@ -106,12 +116,21 @@ class ProductController extends Controller
                 $imageFile->move($uploadPath ,$new_image);
                 $finalImagePathName = $new_image;
 
-        $product->productImage()->create([
-            'product_id' => $product->id,
-            'path' => $finalImagePathName,
-        ]);
-    }
-}
+            $product->productImage()->create([
+                'product_id' => $product->id,
+                'path' => $finalImagePathName,
+            ]);
+            }
+        }
+        if($request->size){
+            foreach($request->size as $key=>$sizes){
+                $product->product_size()->create([
+                    'product_id' => $product->id,
+                    'size_id' => $sizes,
+                    'quantity' => $request->sizequantity[$key] ?? 0
+                ]);
+            }
+        }
         toastr()->success('Thành công', 'Thêm sản phẩm thành công.');
        return redirect()->route('product.index');
        
@@ -127,7 +146,9 @@ class ProductController extends Controller
     {
         //
         $product = Product::with('productCategory', 'brand', 'productImage')->find($id);
-        return view('admin.product.show', compact('product'));
+        $product_sizes = $product->product_size->pluck('size_id')->toArray();
+        $sizes = Size::where('status', '0')->whereNotIn('id', $product_sizes)->get();
+        return view('admin.product.show', compact('product', 'product_sizes', 'sizes'));
     }
 
     /**
@@ -143,7 +164,9 @@ class ProductController extends Controller
         $brand = Brand::pluck('name','id');
         $product = Product::find($id);
         $images = ProductImage::all();
-        return view('admin.product.form', compact('category', 'brand', 'product', 'images'));
+        $product_sizes = $product->product_size->pluck('size_id')->toArray();
+        $sizes = Size::where('status', '0')->whereNotIn('id', $product_sizes)->get();
+        return view('admin.product.form', compact('category', 'brand', 'product', 'images', 'sizes'));
     }
 
     /**
@@ -163,7 +186,6 @@ class ProductController extends Controller
             'description' => 'required',
             'price_origin' => 'required',
             'price' => 'required',
-            'quantity' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',
         ],
@@ -182,7 +204,6 @@ class ProductController extends Controller
         $product->slug = $data['slug'];
         $product->price_origin = $data['price_origin'];
         $product->price = $data['price'];
-        $product->quantity = $data['quantity'];
         $product->category_id = $data['category_id'];
         $product->brand_id = $data['brand_id'];
         $product->status = $data['status'];
@@ -206,6 +227,16 @@ class ProductController extends Controller
             'product_id' => $product->id,
             'path' => $finalImagePathName,
         ]);
+        }
+    }
+
+    if($request->size){
+        foreach($request->size as $key=>$sizes){
+            $product->product_size()->create([
+                'product_id' => $product->id,
+                'size_id' => $sizes,
+                'quantity' => $request->sizequantity[$key] ?? 0
+            ]);
         }
     }
         toastr()->success('Thành công', 'Cập nhật sản phẩm thành công.');
@@ -231,6 +262,9 @@ class ProductController extends Controller
             }
         }
         ProductImage::whereIn('product_id', [$product->id])->delete();
+
+        //xoa chi tiet sp
+        ProductDetail::whereIn('product_id', [$product->id])->delete();
     }
         $product->delete();
         toastr()->info('Thành công', 'Xóa sản phẩm thành công.');
@@ -248,5 +282,22 @@ class ProductController extends Controller
         }
         $productImage->delete();
         return redirect()->back();
+    }
+
+    public function updateQtySize(Request $request, $prod_size_id)
+    {
+        $productSizeData = Product::findOrFail($request->product_id)->product_size()->where('id', $prod_size_id)->first();
+
+        $productSizeData->update([
+            'quantity' => $request->qty
+        ]);
+        return response()->json(['message'=> 'Cập nhật số lượng size thành công!']);
+    }
+
+    public function deleteQtySize($prod_size_id)
+    {
+        $prodSize = ProductDetail::findOrFail($prod_size_id);
+        $prodSize->delete();
+        return response()->json(['message'=> 'Xóa size thành công!']);
     }
 }

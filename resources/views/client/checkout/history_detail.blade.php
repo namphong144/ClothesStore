@@ -71,6 +71,7 @@
                                         </td>
                                         <td class="cart-title first-row">
                                             <h5>{{$item->product->name}}</h5>
+                                            <h5>Size: <b>{{$item->size}}</b></h5>
                                         </td>
                                        
                                         <td class="qua-col first-row">

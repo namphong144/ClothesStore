@@ -53,6 +53,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::resource('/product', ProductController::class);
     Route::get('product-image/{product_image_id}/delete', [ProductController::class, 'destroyImage']);
+    Route::get('/product-status-choose', [ProductController::class, 'status_choose'])->name('product-status-choose');
+    Route::post('/product-size/{prod_size_id}', [ProductController::class, 'updateQtySize']);
+    Route::get('/product-size/{prod_size_id}/delete', [ProductController::class, 'deleteQtySize']);
 
     //image product
     Route::resource('/product/{product_id}/image', ProductImageController::class);

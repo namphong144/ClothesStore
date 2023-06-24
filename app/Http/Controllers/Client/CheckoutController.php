@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Models\Brand;
-use App\Models\OrderDetails;
-use App\Models\Shipping;
 use session;
 use Carbon\Carbon;
 use App\Models\Size;
+use App\Models\Brand;
 use App\Models\Order;
 use App\Models\Store;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\Shipping;
 use Darryldecode\Cart\Cart;
+use App\Models\OrderDetails;
 use Illuminate\Http\Request;
+use App\Models\ProductDetail;
 use App\Models\ProductComment;
 use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
@@ -128,12 +129,13 @@ class CheckoutController extends Controller
            $orderItem = OrderDetails::create([
                'order_id' => $order->id,
                'product_id' => $items->id,
+               'size' => $items->attributes->size,
                'sell_quantity' => $items->quantity,
                'sell_total' => $items->quantity*$items->price,
            ]);
 
            //decrement quantity after purchase
-           $qty = Product::where('id', $items->id)->decrement('quantity', $items->quantity);
+           $prodSize = ProductDetail::where('id', $items->attributes->size_id)->decrement('quantity', $items->quantity);
 
        }
 
