@@ -140,6 +140,12 @@ class ClientController extends Controller
         $max_price = Product::max('price');
         $avg_rating =  ProductComment::where('product_id', $product->id)->avg('rating');
         $avg_rating = round($avg_rating);
+
+        //tang 1 luot view khi click xem sp cụ thể
+        $count_views =  $product->view;
+        $count_views = $count_views + 1;
+        $product->view =  $count_views;
+        $product->save();
         return view('client.product', compact('product', 'category', 'brand', 'related_product', 'min_price', 'max_price', 'avg_rating'));
     }
 
@@ -158,6 +164,12 @@ class ClientController extends Controller
         $blog_detail = Blog::with('user')->where('slug',$slug)->first();
         $blog_more = Blog::orderBy('updated_at', 'ASC')->whereNotIn('slug',[$slug])->first();
         $blog_more2 = Blog::orderBy('updated_at', 'DESC')->whereNotIn('slug',[$slug])->first();
+
+         //tang 1 luot view khi click xem blog cụ thể
+         $count_views =  $blog_detail->view;
+         $count_views = $count_views + 1;
+         $blog_detail->view =  $count_views;
+         $blog_detail->save();
         return view('client.blog_detail', compact('category', 'brand', 'blog_detail', 'blog_more', 'blog_more2'));
     } 
 

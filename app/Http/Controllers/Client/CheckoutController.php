@@ -7,10 +7,9 @@ use Carbon\Carbon;
 use App\Models\Size;
 use App\Models\Brand;
 use App\Models\Order;
-use App\Models\Store;
 use App\Models\Payment;
 use App\Models\Product;
-use App\Models\Shipping;
+use App\Models\Statistic;
 use Darryldecode\Cart\Cart;
 use App\Models\OrderDetails;
 use Illuminate\Http\Request;
@@ -24,52 +23,113 @@ use Illuminate\Support\Facades\Mail;
 class CheckoutController extends Controller
 {
     //
-    public function show_checkout(){
-        $category = ProductCategory::get();
-        $brand = Brand::get();
-        $product_nu = Product::with('brand', 'productImage')->where('status', 0)->where('slug', 'LIKE', '%nu%')->orderBy('updated_at', 'DESC')->paginate(10);
-        $product_nam = Product::with('brand', 'productImage')->where('status', 0)->where('slug', 'LIKE', '%nam%')->orderBy('updated_at', 'DESC')->paginate(10);
-        return view('client.show_checkout', compact( 'category', 'brand', 'product_nu', 'product_nam'));
+//     Thông tin thẻ test VNPAY
+//     Ngân hàng: NCB
+// Số thẻ: 9704198526191432198
+// Tên chủ thẻ:NGUYEN VAN A
+// Ngày phát hành:07/15
+// Mật khẩu OTP:123456
+    public function vnpay(Request $request)
+    {
+        $code_cart = rand(0, 9999);
+        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Returnurl = "http://127.0.0.1:8000/history-purchase";
+        $vnp_TmnCode = "CGXZLS0Z";//Mã website tại VNPAY 
+        $vnp_HashSecret = "XNBCJFAKAZQSGTARRLGCHVZWCIOIGSHN"; //Chuỗi bí mật
+
+        $vnp_TxnRef = $code_cart; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_OrderInfo = 'Thanh toan don hang test';
+        $vnp_OrderType = 'billpayment';
+        $vnp_Amount = $request->total * 100000; //*100 
+        $vnp_Locale = 'vn';
+        $vnp_BankCode = 'NCB';
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        //Add Params of 2.0.1 Version
+        
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef
+        );
+
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+        }
+
+        //var_dump($inputData);
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+        $returnData = array('code' => '00'
+            , 'message' => 'success'
+            , 'data' => $vnp_Url);
+            if (isset($_POST['redirect'])) {
+                 //them don hang
+        $checkout_code = substr(md5(microtime()),rand(0,26),5);
+      
+        $order = Order::create([
+            'customer_id' => auth()->user()->id,
+            'order_status' => '0',
+            'order_code' => $checkout_code,
+            'sales' => \Cart::getTotal(),
+            'profit' => $request->loinhuan,
+            'order_date' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d'),
+            'payment_id' => '2',
+        ]);
+
+         //them chi tiet don hang
+        $cartitems = \Cart::getContent();
+        //dd($cartitems);
+        foreach($cartitems as $items){
+            $orderItem = OrderDetails::create([
+                'order_id' => $order->id,
+                'product_id' => $items->attributes->id,
+                'size' => $items->attributes->size,
+                'sell_quantity' => $items->quantity,
+                'sell_total' => $items->quantity*$items->price,
+            ]);
+ 
+            //decrement quantity after purchase
+            $prodSize = ProductDetail::where('id', $items->attributes->size_id)->decrement('quantity', $items->quantity);
+        }
+        //xoa gio hang
+        \Cart::clear();
+        toastr()->success('Thành công', 'Mua hàng thành công!');
+            header('Location: ' . $vnp_Url);
+                die();
+            } else {
+                echo json_encode($returnData);
+            }
     }
-    public function confirm_order(Request $request){
-            $data = $request ->all();
-            $shipping = new Shipping();
-            $shipping->shipping_name = $data['shipping_name'];
-            $shipping->shipping_address = $data['shipping_address'];
-            $shipping->shipping_email = $data['shipping_email'];
-            $shipping->shipping_phone = $data['shipping_phone'];
-            $shipping->shipping_notes = $data['shipping_notes'];
-            $shipping->shipping_payment = $data['shipping_payment'];
-            $shipping->save();
-            $shipping_id = $shipping->shipping_id;
 
-            $checkout_code = substr(md5(microtime()),rand(0,26),5);
-            $order = new Order();
-            $order->customer_id = Auth::id();
-            $order->shipping_id = $shipping_id;
-            $order->order_status = 1;
-            $order->order_code = $checkout_code;
-            date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $order->created_at = now();
-            $order->save();
-             //xoa gio hang
-            \Cart::clear();
-
-            \Illuminate\Support\Facades\Session::forget('cart');
-
-//        if (\Illuminate\Support\Facades\Session::get('cart')){
-//            foreach (\Illuminate\Support\Facades\Session::get('cart') as $key => $cart){
-//                $order_details = new OrderDetails();
-//                $order_details->order_id = $order['order_id'];
-//                $order_details->order_code = $checkout_code;
-//                $order_details->product_id = $cart['product_id'];
-//                $order_details->product_name = $cart['product_name'];
-//                $order_details->sell_price= $cart['product_price'];
-//                $order_details->sell_quantity= $cart['product_qty'];
-//                $order_details->save();
-//            }
-//        }
-   }
    public function checkout()
    {
        if(Auth::check()){
@@ -80,9 +140,10 @@ class CheckoutController extends Controller
            }
            else{
                $category = ProductCategory::get();
-               $list_payment = Payment::get();
+               //$list_payment = Payment::get();
+               $payment = Payment::pluck('payment_method','id');
                $cart = \Cart::getContent();
-           return view('client.checkout.checkout', compact('category', 'list_payment', 'cart'));
+           return view('client.checkout.checkout', compact('category', 'payment', 'cart'));
            }
        }
       else{
@@ -100,52 +161,81 @@ class CheckoutController extends Controller
 
    public function checkout_process(Request $request)
    {
-       
-       $cartitems = \Cart::getContent();
+        $cartitems = \Cart::getContent();
 
-       $checkout_code = substr(md5(microtime()),rand(0,26),5);
-       
-       //them don hang
-       if(Auth::user()->level == '1'){
-           $order = Order::create([
-               'customer_id' => auth()->user()->id,
-               'order_status' => '3',
-               'order_code' => $checkout_code,
-               'payment_id' => $request->payment,
-           ]); 
-       }else{
-       $order = Order::create([
-            'customer_id' => auth()->user()->id,
-            'order_status' => '0',
-            'order_code' => $checkout_code,
-            'payment_id' => $request->payment,
-       ]);
-   }
+        $checkout_code = substr(md5(microtime()),rand(0,26),5);
+        
+        //them don hang
+        if(Auth::user()->level == '1'){
+            $order = Order::create([
+                'customer_id' => auth()->user()->id,
+                'order_status' => '3',
+                'order_code' => $checkout_code,
+                'sales' => \Cart::getTotal(),
+                'profit' => $request->loinhuan,
+                'order_date' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d'),
+                'payment_id' => '1',
+            ]); 
 
-        //them chi tiet don hang
-      // $cartitems = \Cart::getContent();
-       //dd($cartitems);
-       foreach($cartitems as $items){
-           $orderItem = OrderDetails::create([
-               'order_id' => $order->id,
-               'product_id' => $items->id,
-               'size' => $items->attributes->size,
-               'sell_quantity' => $items->quantity,
-               'sell_total' => $items->quantity*$items->price,
-           ]);
+            $order_date = $order->order_date;
+            $statistic = Statistic::where('order_date', $order_date)->get();
+            if($statistic){
+                    $statistic_count = $statistic->count();
+            }else{
+                    $statistic_count = 0;
+            }
 
-           //decrement quantity after purchase
-           $prodSize = ProductDetail::where('id', $items->attributes->size_id)->decrement('quantity', $items->quantity);
+            //update db statistic
+            if($statistic_count > 0){
+                $statistic_update = Statistic::where('order_date', $order_date)->first();
+                $statistic_update->sales = $statistic_update->sales + $order->sales*1000;
+                $statistic_update->profit = $statistic_update->profit + $order->profit*1000;
+                $statistic_update->total_order += 1;
+                $statistic_update->save();
+            }else{
+                $statistic_new = new Statistic();
+                $statistic_new->order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+                $statistic_new->sales = $order->sales*1000;
+                $statistic_new->profit = $order->profit*1000;
+                $statistic_new->total_order = '1';
+                $statistic_new->save();
+            }
 
-       }
+        }else{
+        $order = Order::create([
+                'customer_id' => auth()->user()->id,
+                'order_status' => '0',
+                'order_code' => $checkout_code,
+                'sales' => \Cart::getTotal(),
+                'profit' => $request->loinhuan,
+                'payment_id' => '1',
+        ]);
+    }
 
-       //gui email
-    //    $total = \Cart::getTotal();
-    //    $subtotal = \Cart::getSubTotal();
-    //    $this->send_mail($order, $total, $subtotal);
-       //xoa gio hang
-       \Cart::clear();
-       toastr()->success('Thành công', 'Mua hàng thành công!');
+            //them chi tiet don hang
+        // $cartitems = \Cart::getContent();
+        //dd($cartitems);
+        foreach($cartitems as $items){
+            $orderItem = OrderDetails::create([
+                'order_id' => $order->id,
+                'product_id' => $items->attributes->id,
+                'size' => $items->attributes->size,
+                'sell_quantity' => $items->quantity,
+                'sell_total' => $items->quantity*$items->price,
+            ]);
+
+            //decrement quantity after purchase
+            $prodSize = ProductDetail::where('id', $items->attributes->size_id)->decrement('quantity', $items->quantity);
+
+        }
+
+        //gui email
+        //    $total = \Cart::getTotal();
+        //    $subtotal = \Cart::getSubTotal();
+        //    $this->send_mail($order, $total, $subtotal);
+        //xoa gio hang
+        \Cart::clear();
+        toastr()->success('Thành công', 'Mua hàng thành công!');
        return redirect()->route('history-purchase');
    }
 
@@ -188,7 +278,32 @@ class CheckoutController extends Controller
        $data = $request->all();
        $order =  Order::find($id);
        $order->order_status = '3';
+       $order->order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
        $order->save();
+
+       $order_date = $order->order_date;
+       $statistic = Statistic::where('order_date', $order_date)->get();
+       if($statistic){
+            $statistic_count = $statistic->count();
+       }else{
+            $statistic_count = 0;
+       }
+
+       //update db statistic
+       if($statistic_count > 0){
+        $statistic_update = Statistic::where('order_date', $order_date)->first();
+        $statistic_update->sales = $statistic_update->sales + $order->sales*1000;
+        $statistic_update->profit = $statistic_update->profit + $order->profit*1000;
+        $statistic_update->total_order += 1;
+        $statistic_update->save();
+       }else{
+        $statistic_new = new Statistic();
+        $statistic_new->order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $statistic_new->sales = $order->sales*1000;
+        $statistic_new->profit = $order->profit*1000;
+        $statistic_new->total_order = '1';
+        $statistic_new->save();
+       }
        toastr()->success('Thành công', 'Xác nhận đơn hàng thành công.');
        return redirect()->back();
    }

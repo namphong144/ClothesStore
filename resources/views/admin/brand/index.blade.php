@@ -1,5 +1,5 @@
 @extends('layouts.layout_admin')
-
+@section('title', 'Thương hiệu')
 @section('main')
 
   <div class="app-main__inner">

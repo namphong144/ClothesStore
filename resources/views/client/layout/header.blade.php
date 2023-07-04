@@ -52,7 +52,8 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
                             <a href="{{route('homepage')}}">
-                                <img src="front/img/logo.png" height="25" alt="">
+                                {{-- <img src="front/img/logo.png" height="25" alt=""> --}}
+                                <img src="{{asset('dashboard/assets/images/logo1.png')}}" alt="" width="150px" height="50px">
                             </a>
                         </div>
                     </div>

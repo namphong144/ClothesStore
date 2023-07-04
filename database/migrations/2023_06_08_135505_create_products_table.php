@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('status');
             $table->text('description');
+            $table->integer('view')->default(0);
             $table->timestamps();
         });
     }

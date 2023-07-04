@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use Illuminate\Http\Request;
@@ -24,23 +25,28 @@ class OrderController extends Controller
          $order->save();
      } 
 
-    public function index()
+     public function filter(Request $request)
+     {
+        $todayDate = Carbon::now()->format('Y-m-d');
+        $date = $request->date;
+        if(isset($request->date)){
+            $list = Order::with('orderDetail', 'user', 'payment')->whereDate('created_at', $date)->orderBy('id','ASC')->get();
+        }
+        if(isset($request->status)){
+            $list = Order::with('orderDetail', 'user', 'payment')->where('order_status', $request->status)->orderBy('id','ASC')->get();
+        }
+        if($request->date && $request->status){
+                $list = Order::with('orderDetail', 'user', 'payment')->whereDate('created_at', $request->date)->where('order_status', $request->status)->orderBy('id','ASC')->get();
+            }
+        $countlist = Order::count('id');
+        return view('admin.order.index', compact('list', 'countlist'));
+     }
+    public function index(Request $request)
     {
         //
         $list = Order::with('orderDetail', 'user', 'payment')->orderBy('order_status','ASC')->get();
         $countlist = Order::count('id');
-        $choxn = Order::with('orderDetail', 'user', 'payment')->where('order_status', 0)->orderBy('id','DESC')->get();
-        $counchoxn = Order::where('order_status', 0)->count('id');
-        $daxn = Order::with('orderDetail', 'user', 'payment')->where('order_status', 1)->orderBy('id','DESC')->get();
-        $countdaxn = Order::where('order_status', 1)->count('id');
-        $dangvc = Order::with('orderDetail', 'user', 'payment')->where('order_status', 2)->orderBy('id','DESC')->get();
-        $countdangvc = Order::where('order_status', 2)->count('id');
-        $daht = Order::with('orderDetail', 'user', 'payment')->where('order_status', 3)->orderBy('id','DESC')->get();
-        $countdaht = Order::where('order_status', 3)->count('id');
-        $dahuy = Order::with('orderDetail', 'user', 'payment')->where('order_status', 4)->orderBy('id','DESC')->get();
-        $countdahuy = Order::where('order_status', 4)->count('id');
-        return view('admin.order.index', compact('list', 'choxn', 'daxn', 'dangvc', 'daht', 'dahuy', 'countlist', 'counchoxn',
-    'countdaxn', 'countdangvc', 'countdaht', 'countdahuy'));
+        return view('admin.order.index', compact('list', 'countlist'));
     }
 
     /**

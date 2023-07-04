@@ -1,5 +1,5 @@
 @extends('client.layout.layout')
-@section('title', 'Homepage')
+@section('title', $product->name)
 @section('body')
          <!--Breadcrumb section-->
          <div class="breadcrumb-section">
@@ -9,7 +9,7 @@
                         <div class="breadcrumb-text">
                             <a href="{{route('homepage')}}"><i class="fa fa-home"></i>Home</a>
                             <a href="{{route('shop')}}">Shop</a>
-                            {{-- <span>{{$product->name}}</span> --}}
+                            <span>{{$product->name}}</span>
                         </div>
                     </div>
                 </div>
@@ -99,7 +99,6 @@
                                         </div>
                                         <ul class="pd-tags">
                                             <li><span>DANH MỤC</span>: {{$product->productCategory->name}}</li>
-                                            {{-- <li><span>TAGS</span>: ao-nam</li> --}}
                                         </ul>
                                         <div class="pd-share">
                                             <div class="p-code">Sku: {{$product->id}}</div>
@@ -159,10 +158,27 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="p-catagory">Size</td>  
+                                                    <td>
+                                                        <div class="p-size">
+                                                            @foreach ($product->product_size as $si)
+                                                                {{$si->size->name}} &nbsp;
+                                                            @endforeach
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <td class="p-catagory">Số lượng sản phẩm</td>
                                                     <td>
-                                                        <div class="p-stock">
-                                                            {{$product->quantity}} &nbsp;
+                                                        <div class="p-stock"> @foreach ($product->product_size as $si)
+                                                            {{$si->quantity}} &nbsp;
+                                                             @endforeach</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-catagory">Sku</td>  
+                                                    <td>
+                                                        <div class="p-code"> {{$product->id}}</div>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -231,7 +247,7 @@
                             </div>
                             <div class="pi-text">
                                 <div class="catagory-name">{{$related->brand->name}}</div>
-                                <a href="#">
+                                <a href="{{route('san-pham', $related->slug)}}">
                                     <h5>{{$related->name}}</h5>
                                 </a>
                                 <div class="product-price">

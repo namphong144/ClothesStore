@@ -137,16 +137,11 @@
                         </ul>
                     </li>
 
-                    <li class="app-sidebar__heading">Quản lý cửa hàng</li>
-                    <li class="{{ request()->is('admin/store') ? 'mm-active' : '' }}">
-                        <a href="">
-                            <i class="metismenu-icon fa fa-info"></i>Thông tin cửa hàng
-                        </a>
-                    </li>
+                    <li class="app-sidebar__heading">Quản lý khách hàng</li>
+
                     <li class="{{ request()->is('admin/user') ? 'mm-active' : '' }}">
                         <a href="{{route('user.index')}}">
-                            <i class="metismenu-icon fa fa-user-circle"></i>Admin, User
-                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                            <i class="metismenu-icon fa fa-user-circle"></i>Khách hàng
                         </a>
                     </li>
                 </ul>

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('image_cover');
             $table->longText('content');
             $table->tinyInteger('status')->default('0')->comment('1=hidden, 0=visible');
+            $table->integer('view')->default(0);
             $table->timestamps();
         });
     }

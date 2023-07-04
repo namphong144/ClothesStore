@@ -39,6 +39,9 @@ use App\Http\Controllers\Admin\ProductCategoryController;
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::get('/', [DashboardController::class, 'index']);
+    Route::post('/filter-by-date', [DashboardController::class, 'filter_by_date'])->name('filter-by-date');
+    Route::post('/dashboard-filter', [DashboardController::class, 'dashboard_filter'])->name('dashboard-filter');
+    Route::post('/month-order', [DashboardController::class, 'month_order'])->name('month-order');
 
     Route::resource('/user', UserController::class);
     Route::get('/level-choose', [UserController::class, 'level_choose'])->name('level-choose');
@@ -65,7 +68,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
       //order
       Route::resource('/order', OrderController::class);
-      //Route::get('/order-choxn', [OrderController::class, 'order_choxn'])->name('order-choxn');
+      Route::get('/order-filter', [OrderController::class, 'filter'])->name('order-filter');
       Route::get('/status-choose', [OrderController::class, 'orderstatus_choose'])->name('orderst-choose');
 
 });
@@ -94,6 +97,9 @@ Route::post('/clear-all-cart', [CartController::class, 'clear_all_cart'])->name(
 //checkout
  Route::get('/check-out', [CheckoutController::class, 'checkout'])->name('check-out');
  Route::post('/check-out-process', [CheckoutController::class, 'checkout_process'])->name('check-out-process');
+
+//vnpay
+Route::post('/vnpay', [CheckoutController::class, 'vnpay'])->name('vnpay');
 
  //history purchase
  Route::get('/history-purchase', [CheckoutController::class, 'history_purchase'])->name('history-purchase');

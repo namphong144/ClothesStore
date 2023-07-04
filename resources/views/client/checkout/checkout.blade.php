@@ -1,5 +1,5 @@
 @extends('client.layout.layout')
-@section('title', 'Homepage')
+@section('title', 'Thanh toán')
 @section('body')
  <!--Breadcrumb section-->
  <div class="breadcrumb-section">
@@ -58,9 +58,9 @@
                                 <input type="hidden" value="{{$item->quantity}}" name="qty">
                                 <input type="hidden" value="{{$item->attributes->price_origin * $item->quantity}}" name="thanhtien">
                                      <li class="fw-normal">
-                                            <img src="{{asset('uploads/product/'.$item->attributes->image)}}" alt="" width="60px" height="60px">
-                                            {{$item->name}} x {{$item->quantity}} 
-                                            <br>Size: <b>{{$item->attributes->size}}</b>
+                                        <img src="{{asset('uploads/product/'.$item->attributes->image)}}" alt="" width="60px" height="60px">
+                                        {{$item->name}} x {{$item->quantity}} 
+                                        <br>Size: <b>{{$item->attributes->size}}</b>
                                         <span>{{number_format($item->quantity * $item->price).',000'}} <sup>đ</sup></span>
                                     </li>
                                     @php
@@ -73,36 +73,28 @@
                                 <li class="total-price">Total<span>{{number_format(Cart::getSubTotal()).',000'}} <sup>đ</sup></span></li>
                             </ul>
                             <div class="payment-check">
-                                @foreach ($list_payment as $key=>$list)
-                                <div class="pc-item">
-                                    <label for="pc-check">
-                                     {{$list->payment_method}}
-                                        <input type="checkbox" name="payment" id="pc-check" value="{{$list->id}}">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                @endforeach
-                        
                             </div>
                             <div class="order-btn">
-                                <button type="submit" class="site-btn place-btn">Thanh toán</button>
+                                <button type="submit" class="site-btn place-btn">Thanh toán khi nhận hàng</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
-        {{-- <div class="row" style="margin: 20px">
+       
+        <div class="row" style="margin: 20px">
             <div class="col-lg-4">
             </div>
             <div class="col-lg-8">
-                <form action="" method="POST">
+                <form action="{{route('vnpay')}}" method="POST">
                     @csrf
+                    <input type="hidden" value="{{Cart::getTotal() - $tongtien}}" name="loinhuan">
                     <input type="hidden" name="total" value="{{Cart::getSubTotal()}}">
-                    <button type="submit" name="redirect">Thanh toán VNPay</button>
+                    <button type="submit" name="redirect" class="site-btn place-btn">Thanh toán VNPay</button>
                 </form>
             </div>
-    </div> --}}
+        </div>
 </div>
  <!--Check out Section End-->
 @endsection

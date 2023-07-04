@@ -1,5 +1,5 @@
  @extends('client.layout.layout')
-@section('title', 'Homepage')
+@section('title', 'Trang chủ')
 @section('body')
           <!-- BODY END-->
 

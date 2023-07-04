@@ -1,5 +1,5 @@
 @extends('client.layout.layout')
-@section('title', 'Homepage')
+@section('title', $blog_detail->title)
 @section('body')
          <!-- Blog detail Section Begin-->
          <div class="blog-details">

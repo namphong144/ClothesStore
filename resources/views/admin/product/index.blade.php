@@ -1,5 +1,6 @@
 @extends('layouts.layout_admin')
 
+@section('title', 'Sản phẩm')
 @section('main')
 
   <div class="app-main__inner">
@@ -86,9 +87,15 @@
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <div class="badge badge-success">
-                                        {{$cate->status ? 'Ẩn':'Hiển thị'}}
-                                    </div>
+                                    <select name="" id="{{$cate->id}}" class="status_choose">
+                                        @if ($cate->status == 0)
+                                        <option value="1">Ẩn</option>
+                                        <option selected value="0">Hiển thị</option>
+                                        @else
+                                        <option selected value="1">Ẩn</option>
+                                        <option value="0">Hiển thị</option>
+                                        @endif
+                                    </select>
                                 </td>
 
                                 <td class="text-center">
@@ -128,4 +135,24 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+      $('.status_choose').change(function(){
+        var status_val = $(this).val();
+        var product_id = $(this).attr('id');
+        $.ajax({
+                url: "{{ route('product-status-choose') }}",
+                method: "GET",
+                data: {
+                    status_val:status_val,
+                    product_id:product_id
+                },
+                success: function(data) {
+                   alert('Thay đổi thành công!');
+                }
+            });
+      })
+</script>
 @endsection

@@ -10,7 +10,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Admin - CodeLean eShop</title>
+    <title>PPSTYPE Shop - @yield('title')</title>
+    <meta property="og:image" content="public/dashboard/assets/images/logo1.png" />
+    <meta property="og:image:width" content="300" />
+    <meta property="og:image:height" content="55" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description"
@@ -27,6 +30,9 @@
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
+    {{-- MORRIS CHART --}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+
     <link href="./dashboard/main.css" rel="stylesheet">
     <link href="./dashboard/my_style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -36,7 +42,10 @@
     <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
-                <a href="{{url('admin')}}"><div class="logo-src"></div></a>
+                <a href="{{url('admin')}}">
+                    {{-- <div class="logo-src"></div> --}}
+                    <img src="{{asset('dashboard/assets/images/logo1.png')}}" alt="" width="110px" height="35px">
+                </a>
                 <div class="header__pane ml-auto">
                     <div>
                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
@@ -248,6 +257,9 @@
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+
     <script>
         $(document).ready(function() {
     $('#myTable').DataTable( {
@@ -310,7 +322,96 @@
         })
   </script>
 
-     @yield('script')
+<script>
+    $( function() {
+    $( "#datepicker" ).datepicker({ 
+        dateFormat: 'yy-mm-dd',     
+    });
+    $( "#datepicker2" ).datepicker({
+        // prevText: "Tháng trước",
+        // nextText: "Tháng sau",
+        dateFormat: 'yy-mm-dd',
+        // dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5""Thứ 6", "Thứ 7", "Chủ nhật"],
+        // duration: "slow"
+    });
+    } );
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function() {
+        chart60daysorder();
+        var chart = new Morris.Line({
+       
+        element: 'myfirstchart',
+        //option chart
+        lineColors: ['#819C79', '#fc8710', 'FF6541', '#A4ADD3', '#766B56'],
+        parseTime: false,
+       // hideHover: auto,
+       
+       xkey: 'period',
+
+        ykeys: ['order', 'sales', 'profit'],
+
+        labels: ['Đơn hàng', 'Doanh số', 'Lợi nhuận']
+        });
+
+        function chart60daysorder() {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{ route('month-order') }}",
+                method: "POST",
+                dataType: "JSON",
+                data: {
+                    _token:_token,
+                },
+                success:function(data) {
+                    chart.setData(data);
+                }
+            });
+        }
+
+        $('.dashboard-filter').change(function() {
+            var dashboard_value = $(this).val();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{ route('dashboard-filter') }}",
+                method: "POST",
+                dataType: "JSON",
+                data: {
+                    dashboard_value:dashboard_value,
+                    _token:_token,
+                },
+                success:function(data) {
+                    chart.setData(data);
+                }
+            });
+        });
+
+        $('#btn-dashboard-filter').click(function() {
+        var _token = $('input[name="_token"]').val();
+        
+        var from_date = $('#datepicker').val();
+        var to_date = $('#datepicker2').val();
+        $.ajax({
+                url: "{{ route('filter-by-date') }}",
+                method: "POST",
+                dataType: "JSON",
+                data: {
+                    from_date:from_date,
+                    to_date:to_date,
+                    _token:_token,
+                },
+                success:function(data) {
+                    chart.setData(data);
+                }
+            });
+
+    });
+});
+</script>
+
+
+@yield('script')
 </body>
 
 </html>

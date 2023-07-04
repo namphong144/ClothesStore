@@ -1,5 +1,5 @@
 @extends('client.layout.layout')
-@section('title', 'Homepage')
+@section('title', 'Tìm kiếm sản phẩm')
 @section('body')
         <!--Breadcrumb section-->
         <div class="breadcrumb-section">

@@ -1,5 +1,169 @@
 @extends('layouts.layout_admin')
 @section('title', 'Dashboard')
+
+<style>
+h4, h5, h6,
+h1, h2, h3 {margin: 0;}
+ul, ol {margin: 0;}
+p {margin: 0;}
+
+html, body{
+	font-family: 'Roboto', sans-serif;
+    font-size: 100%;
+    overflow-x: hidden;
+    background: url(../images/bg.jpg) no-repeat 0px 0px;
+	background-size:cover;
+}
+body a{
+	transition: 0.5s all ease;
+	-webkit-transition: 0.5s all ease;
+	-moz-transition: 0.5s all ease;
+	-o-transition: 0.5s all ease;
+	-ms-transition: 0.5s all ease;
+	text-decoration:none;
+}
+h1,h2,h3,h4,h5,h6{
+	margin:0;			   
+}
+p{
+	margin:0;
+}
+ul,label{
+	margin:0;
+	padding:0;
+}
+body a:hover{
+	text-decoration:none;
+}
+.wrapper {
+    display:inline-block;
+    margin-top:10px;
+    padding:15px;
+    width:100%;
+}
+/*--market--*/
+.market-updates{
+    display: flex;
+    margin: 1.5em 0;
+}
+.market-update-block {
+    padding: 2em 2em;
+    background: #999;
+    height: 180px;
+}
+.market-update-block h3 {
+    color: #fff;
+    font-size: 2em;
+}
+.market-update-block h4 {
+	font-size: 1.2em;
+    color: #fff;
+    margin: 0.3em 0em;
+}
+.market-update-block p {
+    color: #fff;
+    font-size: 0.8em;
+    line-height: 1.8em;
+}
+.market-update-block.clr-block-1 {
+    background: #53d769;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+}
+.market-update-block.clr-block-2 {
+    background:#fc3158;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+}
+.market-update-block.clr-block-3 {
+    background:#147efb;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+}
+.market-update-block.clr-block-4 {
+    background:#2a2727;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+}
+.market-update-block.clr-block-1:hover {
+    background: #8b5c7e;
+   transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+}
+.market-update-block.clr-block-2:hover {
+    background: #8b5c7e;
+   transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+}
+.market-update-block.clr-block-3:hover {
+    background:#8b5c7e;
+    transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+}
+.market-update-block.clr-block-4:hover {
+    background:#8b5c7e;
+    transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+}
+.market-update-right i.fa.fa-users {
+    font-size: 3em;
+    color:#fff;
+   text-align: left;
+}
+.market-update-right i.fa.fa-eye {
+     font-size: 3em;
+    color:#fff;
+   text-align: left;
+}
+.market-update-right i.fa.fa-usd {
+     font-size:3em;
+    color:#fff;
+    text-align: left;
+}
+.market-update-right i.fa.fa-shopping-cart{
+     font-size:3em;
+    color:#fff;
+    text-align: left;
+}
+.market-update-left {
+    padding: 0px;
+}
+.market-update-right {
+    padding-left: 0;
+}
+.market-update-gd {
+    float: left;
+    width: 50%;
+    margin: 1em 0;
+}
+
+.title_thongke{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+/*--market--*/
+</style>
 @section('main')
 <section id="main-content">
 	<section class="wrapper">
@@ -36,7 +200,7 @@
 					</div>
 					<div class="col-md-8 market-update-left">
 						<h4>Doanh thu hôm nay</h4>
-                        <h3>{{number_format($revenue_today->sales)}}<sup>đ</sup></h3>
+                        <h3>{{number_format(0)}}<sup>đ</sup></h3>
 					</div>
 				  <div class="clearfix"> </div>
 				</div>
@@ -48,7 +212,7 @@
 					</div>
 					<div class="col-md-8 market-update-left">
 						<h4>Lợi nhuận hôm nay</h4>
-                        <h3>{{number_format($revenue_today->profit)}}<sup>đ</sup></h3>
+                        <h3>{{number_format(0)}}<sup>đ</sup></h3>
 					</div>
 				  <div class="clearfix"> </div>
 				</div>
@@ -100,25 +264,13 @@
                 <div class="col-md-4 col-xs-12">
                     <p class="title_thongke" style=" font-size: 20px;">Bài viết xem nhiều</p>
                     <ul class="list_view">
-                        @foreach ($blog_view as $key=>$view)
-                            <li>
-                                <span style="color: orange">{{$key+1}}</span>
-                                <a target="_blank" href="{{route('blog-detail', $view->slug)}}">{{$view->title}} | 
-                                    <span style="color: black">{{$view->view}}</span>
-                                </a>
-                            </li>
-                        @endforeach
+                        <li><a target="_blank" href=""></a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 col-xs-12">
                     <p class="title_thongke" style=" font-size: 20px;">Sản phẩm xem nhiều</p>
                     <ul class="list_view">
-                        @foreach ($product_view as $key=>$view)
-                            <li>
-                                <span style="color: orange">{{$key+1}}</span>
-                                <a target="_blank" href="{{route('san-pham', $view->slug)}}">{{$view->name}} | <span style="color: black">{{$view->view}}</span></a>
-                            </li>
-                        @endforeach
+                        <li><a target="_blank" href=""></a></li>
                     </ul>
                 </div>
             </div>

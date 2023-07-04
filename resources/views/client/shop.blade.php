@@ -1,5 +1,5 @@
 @extends('client.layout.layout')
-@section('title', 'Homepage')
+@section('title', 'Shop')
 @section('body')
         <!--Breadcrumb section-->
         <div class="breadcrumb-section">
