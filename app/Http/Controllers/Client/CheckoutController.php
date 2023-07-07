@@ -219,6 +219,7 @@ class CheckoutController extends Controller
             $orderItem = OrderDetails::create([
                 'order_id' => $order->id,
                 'product_id' => $items->attributes->id,
+                'product_detail_id' => $items->attributes->product_detail_id,
                 'size' => $items->attributes->size,
                 'sell_quantity' => $items->quantity,
                 'sell_total' => $items->quantity*$items->price,
@@ -267,8 +268,14 @@ class CheckoutController extends Controller
        $order->order_status = '4';
        $order->save();
 
-       //increment quantity after cancel
-       //$qty = Product::where('id', $items->id)->increment('quantity', $items->quantity);
+       $order_detail = OrderDetails::with('order', 'product')->where('order_id', $id)->get();
+       foreach($order_detail as $items){
+        $sell_quantity = $items->sell_quantity;
+        
+        //cong so luong sp da huy vao kho
+        $qty = ProductDetail::where('id', $items->product_detail_id)->increment('quantity', $sell_quantity);
+       };
+       
        toastr()->success('Thành công', 'Hủy đơn hàng thành công.');
        return redirect()->back();
    }

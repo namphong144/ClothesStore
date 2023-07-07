@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderDetails;
+use App\Models\ProductDetail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -22,5 +23,9 @@ class OrderDetails extends Model
 
     public function product(){
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public function productDetail(){
+        return $this->belongsTo(ProductDetail::class, 'product_detail_id', 'id');
     }
 }

@@ -35,6 +35,8 @@ class ProductController extends Controller
         $countlist = Product::count('id');
         $category = ProductCategory::pluck('name','id');
         $brand = Brand::pluck('name','id');
+
+        $saphet = ProductDetail::with('product')->where('quantity', '<=', 10)->get();
         
         $path = public_path()."/json/";
         if(!is_dir($path)){
@@ -43,7 +45,7 @@ class ProductController extends Controller
         }else{
             File::put($path.'product.json', json_encode($list));
         }
-        return view('admin.product.index', compact('list', 'countlist', 'category', 'brand'));
+        return view('admin.product.index', compact('list', 'countlist', 'category', 'brand', 'saphet'));
        
     }
     

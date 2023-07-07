@@ -20,4 +20,8 @@ class ProductDetail extends Model
     public function size(){
         return $this->belongsTo(Size::class, 'size_id', 'id');
     }
+
+    public function orderDetail(){
+        return $this ->HasMany(OrderDetails::class, 'product_detail_id', 'id');
+    }
 }

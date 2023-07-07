@@ -158,29 +158,35 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-catagory">Size</td>  
-                                                    <td>
-                                                        <div class="p-size">
-                                                            @foreach ($product->product_size as $si)
-                                                                {{$si->size->name}} &nbsp;
-                                                            @endforeach
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-catagory">Số lượng sản phẩm</td>
-                                                    <td>
-                                                        <div class="p-stock"> @foreach ($product->product_size as $si)
-                                                            {{$si->quantity}} &nbsp;
-                                                             @endforeach</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
                                                     <td class="p-catagory">Sku</td>  
                                                     <td>
                                                         <div class="p-code"> {{$product->id}}</div>
                                                     </td>
                                                 </tr>
+                                               <tr>
+                                                    <table>
+                                                        <tr>
+                                                            <td class="p-catagory">Size</td>  
+                                                            @foreach ($product->product_size as $si)
+                                                            <td>
+                                                                <div class="p-size"> 
+                                                                    {{$si->size->name}} &nbsp;   
+                                                                </div>
+                                                            </td>
+                                                            @endforeach
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="p-catagory">Số lượng sản phẩm</td>
+                                                            @foreach ($product->product_size as $si)
+                                                            <td>
+                                                                <div class="p-stock"> 
+                                                                    {{$si->quantity}} &nbsp;
+                                                                </div>
+                                                            </td>
+                                                            @endforeach
+                                                        </tr>
+                                                    </table>
+                                               </tr>
                                             </table>
                                         </div>
                                     </div>

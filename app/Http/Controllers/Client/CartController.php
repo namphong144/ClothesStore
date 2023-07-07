@@ -37,42 +37,8 @@ class CartController extends Controller
         $product =  Product::with('product_size')->find($product_id);
         $sizeid = $request->size_id;
         $product_size =  ProductDetail::with('size')->find($sizeid);
-        // $sizename = $product_size->size->name;
         $quantity = $request->qty;
-        // $qtykho = $product_size->quantity;
-    //     if($quantity > $qtykho){
-    //         toastr()->error('Lỗi', 'Số lượng sản phẩm trong kho không đủ. Vui lòng giảm số lượng bạn đã chọn!');
-    //         return redirect()->back(); 
-    //     }elseif
-    //     ($quantity == 0){
-    //         toastr()->error('Lỗi', 'Số lượng sản phẩm không hợp lệ!');
-    //         return redirect()->back(); 
-    //     }elseif(!isset($sizeid)){
-    //         $sizename = $product_size->size->name;
-    //         $qtykho = $product_size->quantity;
-    //         toastr()->error('Lỗi', 'Vui lòng chọn size!');
-    //         return redirect()->back(); 
-    //     }
-    //     else{
-    //     \Cart::add(array(
-    //         'id' => $product_id.'.'.$sizeid,
-    //         'name' => $product->name,
-    //         'quantity' => $request->qty,
-    //         'price' => $product->price,
-    //         'image' => $product->image,
-    //         'attributes' => array(
-    //             'id' => $product->id,
-    //             'quantity' => $qtykho,
-    //             'size_id' => $sizeid,
-    //             'size' => $sizename,
-    //             'image' => $product->productImage[0]->path,
-    //             'slug' => $product->slug,
-    //             'price_origin'=>$product->price_origin,
-    //         ),
-    //     ));
-    //     toastr()->success('Thành công', 'Thêm vào giỏ hàng thành công.');
-    //     return redirect()->route('list-cart');
-    // }
+
     if(isset($sizeid)){
         $sizename = $product_size->size->name;
         $qtykho = $product_size->quantity;
@@ -94,6 +60,7 @@ class CartController extends Controller
                     'id' => $product->id,
                     'quantity' => $qtykho,
                     'size_id' => $sizeid,
+                    'product_detail_id' => $product_size->id,
                     'size' => $sizename,
                     'image' => $product->productImage[0]->path,
                     'slug' => $product->slug,
