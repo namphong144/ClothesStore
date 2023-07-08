@@ -26,7 +26,7 @@ class ProductController extends Controller
         $product = Product::find($data['product_id']);
         $product->status = $data['status_val'];
         $product->save();
-    } 
+    }
 
     public function index()
     {
@@ -37,7 +37,7 @@ class ProductController extends Controller
         $brand = Brand::pluck('name','id');
 
         $saphet = ProductDetail::with('product')->where('quantity', '<=', 10)->get();
-        
+
         $path = public_path()."/json/";
         if(!is_dir($path)){
             mkdir($path, 0777, true);
@@ -46,9 +46,9 @@ class ProductController extends Controller
             File::put($path.'product.json', json_encode($list));
         }
         return view('admin.product.index', compact('list', 'countlist', 'category', 'brand', 'saphet'));
-       
+
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -62,7 +62,7 @@ class ProductController extends Controller
         $brand = Brand::pluck('name','id');
         $size = Size::where('status', '0')->get();
         return view('admin.product.form', compact('category', 'brand', 'size'));
- 
+
     }
 
     /**
@@ -84,16 +84,16 @@ class ProductController extends Controller
             'category_id' => 'required',
             'brand_id' => 'required',
         ],
-    [
-            'name.required' => 'Tên sản phẩm bắt buộc phải nhập.',
-            'name.max' => 'Tên sản phẩm chỉ dài tối đa 255 kí tự.',
-            'name.unique' => 'Tên sản phẩm đã tồn tại.',
-            'price_origin.required' => 'Giá nhập sản phẩm bắt buộc phải nhập.',
-            'price.required' => 'Giá sản phẩm bắt buộc phải nhập.',
-            'slug.required' => 'Slug sản phẩm bắt buộc phải nhập.',
-            'description.required' => 'Mô tả sản phẩm bắt buộc phải nhập.',
-    ]);
-        
+            [
+                'name.required' => 'Tên sản phẩm bắt buộc phải nhập.',
+                'name.max' => 'Tên sản phẩm chỉ dài tối đa 255 kí tự.',
+                'name.unique' => 'Tên sản phẩm đã tồn tại.',
+                'price_origin.required' => 'Giá nhập sản phẩm bắt buộc phải nhập.',
+                'price.required' => 'Giá sản phẩm bắt buộc phải nhập.',
+                'slug.required' => 'Slug sản phẩm bắt buộc phải nhập.',
+                'description.required' => 'Mô tả sản phẩm bắt buộc phải nhập.',
+            ]);
+
         $product = new Product();
         $product->name = $data['name'];
         $product->slug = $data['slug'];
@@ -105,7 +105,7 @@ class ProductController extends Controller
         $product->description = $data['description'];
         $product->save();
 
-        
+
         if($request->hasFile('images')){
 
             $uploadPath = public_path().'/uploads/product/';
@@ -118,10 +118,10 @@ class ProductController extends Controller
                 $imageFile->move($uploadPath ,$new_image);
                 $finalImagePathName = $new_image;
 
-            $product->productImage()->create([
-                'product_id' => $product->id,
-                'path' => $finalImagePathName,
-            ]);
+                $product->productImage()->create([
+                    'product_id' => $product->id,
+                    'path' => $finalImagePathName,
+                ]);
             }
         }
         if($request->size){
@@ -134,8 +134,8 @@ class ProductController extends Controller
             }
         }
         toastr()->success('Thành công', 'Thêm sản phẩm thành công.');
-       return redirect()->route('product.index');
-       
+        return redirect()->route('product.index');
+
     }
 
     /**
@@ -191,16 +191,16 @@ class ProductController extends Controller
             'category_id' => 'required',
             'brand_id' => 'required',
         ],
-    [
-            'name.required' => 'Tên sản phẩm bắt buộc phải nhập.',
-            'name.max' => 'Tên sản phẩm chỉ dài tối đa 255 kí tự.',
-            'name.unique' => 'Tên sản phẩm đã tồn tại.',
-            'price_origin.required' => 'Giá nhập sản phẩm bắt buộc phải nhập.',
-            'price.required' => 'Giá sản phẩm bắt buộc phải nhập.',
-            'slug.required' => 'Slug sản phẩm bắt buộc phải nhập.',
-            'description.required' => 'Mô tả sản phẩm bắt buộc phải nhập.',
-    ]);
-        
+            [
+                'name.required' => 'Tên sản phẩm bắt buộc phải nhập.',
+                'name.max' => 'Tên sản phẩm chỉ dài tối đa 255 kí tự.',
+                'name.unique' => 'Tên sản phẩm đã tồn tại.',
+                'price_origin.required' => 'Giá nhập sản phẩm bắt buộc phải nhập.',
+                'price.required' => 'Giá sản phẩm bắt buộc phải nhập.',
+                'slug.required' => 'Slug sản phẩm bắt buộc phải nhập.',
+                'description.required' => 'Mô tả sản phẩm bắt buộc phải nhập.',
+            ]);
+
         $product =  Product::find($id);
         $product->name = $data['name'];
         $product->slug = $data['slug'];
@@ -225,22 +225,22 @@ class ProductController extends Controller
                 $imageFile->move($uploadPath ,$new_image);
                 $finalImagePathName = $new_image;
 
-        $product->productImage()->create([
-            'product_id' => $product->id,
-            'path' => $finalImagePathName,
-        ]);
+                $product->productImage()->create([
+                    'product_id' => $product->id,
+                    'path' => $finalImagePathName,
+                ]);
+            }
         }
-    }
 
-    if($request->size){
-        foreach($request->size as $key=>$sizes){
-            $product->product_size()->create([
-                'product_id' => $product->id,
-                'size_id' => $sizes,
-                'quantity' => $request->sizequantity[$key] ?? 0
-            ]);
+        if($request->size){
+            foreach($request->size as $key=>$sizes){
+                $product->product_size()->create([
+                    'product_id' => $product->id,
+                    'size_id' => $sizes,
+                    'quantity' => $request->sizequantity[$key] ?? 0
+                ]);
+            }
         }
-    }
         toastr()->success('Thành công', 'Cập nhật sản phẩm thành công.');
         return redirect()->route('product.index');
     }
@@ -255,19 +255,19 @@ class ProductController extends Controller
     {
         //
         $product = Product::find($id);
-               //xoa ảnh sp  
+        //xoa ảnh sp
         if($product->productImage){
             foreach ($product->productImage as $image){
                 $paths = public_path().'/uploads/product/'.$image->path;
                 if(file_exists($paths)){
                     unlink($paths);
+                }
             }
-        }
-        ProductImage::whereIn('product_id', [$product->id])->delete();
+            ProductImage::whereIn('product_id', [$product->id])->delete();
 
-        //xoa chi tiet sp
-        ProductDetail::whereIn('product_id', [$product->id])->delete();
-    }
+            //xoa chi tiet sp
+            ProductDetail::whereIn('product_id', [$product->id])->delete();
+        }
         $product->delete();
         toastr()->info('Thành công', 'Xóa sản phẩm thành công.');
         return redirect()->back();

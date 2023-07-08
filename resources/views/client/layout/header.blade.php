@@ -29,20 +29,20 @@
                     @else
                     <a href="{{ route('login') }}" class="login-panel"><i class="fa fa-user"></i> Login</a>
                     @endif
-                    <div class="lan-selector">
-                        <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                        <option value="yt" data-image="front/img/flag-1.jpg" data-imagecss="flag yt"
-                        data-title="English">English</option>
-                        <option value="yu" data-image="front/img/flag-2.jpg" data-imagecss="flag yu"
-                        data-title="Bangladesh">German</option>
-                    </select>
-                    </div>
-                    <div class="top-social">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                        <a href="#"><i class="ti-linkedin"></i></a>
-                        <a href="#"><i class="ti-pinterest"></i></a>
-                    </div>
+{{--                    <div class="lan-selector">--}}
+{{--                        <select class="language_drop" name="countries" id="countries" style="width:300px;">--}}
+{{--                        <option value="yt" data-image="front/img/flag-1.jpg" data-imagecss="flag yt"--}}
+{{--                        data-title="English">English</option>--}}
+{{--                        <option value="yu" data-image="front/img/flag-2.jpg" data-imagecss="flag yu"--}}
+{{--                        data-title="Bangladesh">German</option>--}}
+{{--                    </select>--}}
+{{--                    </div>--}}
+{{--                    <div class="top-social">--}}
+{{--                        <a href="#"><i class="ti-facebook"></i></a>--}}
+{{--                        <a href="#"><i class="ti-twitter-alt"></i></a>--}}
+{{--                        <a href="#"><i class="ti-linkedin"></i></a>--}}
+{{--                        <a href="#"><i class="ti-pinterest"></i></a>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
@@ -150,13 +150,13 @@
                         <li class="{{ request()->is('blogs', 'blogs/*') ? 'active' : '' }}"><a href="{{route('blogs')}}">Blog</a></li>
                         <li class="{{ request()->is('contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Liên hệ</a></li>
                         <li><a href="">Trang</a>
-                            <ul class="dropdown">    
-                                <li><a href="{{route('list-cart')}}">Giỏ hàng</a></li>  
-                                <li><a href="{{route('check-out')}}">Thanh toán</a></li>   
-                                <li><a href="{{route('history-purchase')}}">Account</a></li>   
-                                <li><a href="{{route('register')}}">Đăng ký</a></li>  
+                            <ul class="dropdown">
+                                <li><a href="{{route('list-cart')}}">Giỏ hàng</a></li>
+                                <li><a href="{{route('check-out')}}">Thanh toán</a></li>
+                                <li><a href="{{route('history-purchase')}}">Account</a></li>
+                                <li><a href="{{route('register')}}">Đăng ký</a></li>
                                 @if(!Auth::check())
-                                <li><a href="{{route('login')}}">Đăng nhập</a></li>    
+                                <li><a href="{{route('login')}}">Đăng nhập</a></li>
                                 @else
                                 <li><a id="navbarDropdown" class="nav-link" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -166,7 +166,7 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
-                                @endif             
+                                @endif
                     </ul>
                         </li>
                     </ul>

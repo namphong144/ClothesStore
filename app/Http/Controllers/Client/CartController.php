@@ -17,16 +17,16 @@ class CartController extends Controller
 
     public function list_cart()
     {
-        
+
         if(\Cart::getContent()->isEmpty())
         {
             toastr()->warning('Cảnh báo', 'Không có sản phẩm nào trong giỏ hàng của bạn!');
-           return redirect()->back(); 
+            return redirect()->back();
         }
         else{
             $category = ProductCategory::get();
             $cart = \Cart::getContent();
-          //dd($cart);
+            //dd($cart);
             return view('client.cart.show', compact('category', 'cart'));
         }
     }
@@ -39,42 +39,42 @@ class CartController extends Controller
         $product_size =  ProductDetail::with('size')->find($sizeid);
         $quantity = $request->qty;
 
-    if(isset($sizeid)){
-        $sizename = $product_size->size->name;
-        $qtykho = $product_size->quantity;
-        if($quantity > $qtykho){
-            toastr()->error('Lỗi', 'Số lượng sản phẩm trong kho không đủ. Vui lòng giảm số lượng bạn đã chọn!');
-            return redirect()->back(); 
-        }elseif
-        ($quantity == 0){
-            toastr()->error('Lỗi', 'Số lượng sản phẩm không hợp lệ!');
-            return redirect()->back(); 
+        if(isset($sizeid)){
+            $sizename = $product_size->size->name;
+            $qtykho = $product_size->quantity;
+            if($quantity > $qtykho){
+                toastr()->error('Lỗi', 'Số lượng sản phẩm trong kho không đủ. Vui lòng giảm số lượng bạn đã chọn!');
+                return redirect()->back();
+            }elseif
+            ($quantity == 0){
+                toastr()->error('Lỗi', 'Số lượng sản phẩm không hợp lệ!');
+                return redirect()->back();
+            }else{
+                \Cart::add(array(
+                    'id' => $product_id.'.'.$sizeid,
+                    'name' => $product->name,
+                    'quantity' => $request->qty,
+                    'price' => $product->price,
+                    'image' => $product->image,
+                    'attributes' => array(
+                        'id' => $product->id,
+                        'quantity' => $qtykho,
+                        'size_id' => $sizeid,
+                        'product_detail_id' => $product_size->id,
+                        'size' => $sizename,
+                        'image' => $product->productImage[0]->path,
+                        'slug' => $product->slug,
+                        'price_origin'=>$product->price_origin,
+                    ),
+                ));
+                toastr()->success('Thành công', 'Thêm vào giỏ hàng thành công.');
+                return redirect()->route('list-cart');
+            }
         }else{
-            \Cart::add(array(
-                'id' => $product_id.'.'.$sizeid,
-                'name' => $product->name,
-                'quantity' => $request->qty,
-                'price' => $product->price,
-                'image' => $product->image,
-                'attributes' => array(
-                    'id' => $product->id,
-                    'quantity' => $qtykho,
-                    'size_id' => $sizeid,
-                    'product_detail_id' => $product_size->id,
-                    'size' => $sizename,
-                    'image' => $product->productImage[0]->path,
-                    'slug' => $product->slug,
-                    'price_origin'=>$product->price_origin,
-                ),
-            ));
-            toastr()->success('Thành công', 'Thêm vào giỏ hàng thành công.');
-            return redirect()->route('list-cart');
+            toastr()->error('Lỗi', 'Vui lòng chọn size!');
+            return redirect()->back();
         }
-    }else{
-        toastr()->error('Lỗi', 'Vui lòng chọn size!');
-        return redirect()->back(); 
-    }
-    
+
     }
 
     public function update_cart(Request $request)
@@ -84,27 +84,27 @@ class CartController extends Controller
         $qtykho = $product_size->quantity;
         if($request->quantity == 0){
             toastr()->error('Lỗi', 'Số lượng sản phẩm không hợp lệ!');
-            return redirect()->back(); 
+            return redirect()->back();
         }
         elseif($request->quantity > $qtykho){
             toastr()->error('Lỗi', 'Số lượng sản phẩm trong kho không đủ. Vui lòng giảm số lượng bạn đã chọn!');
-            return redirect()->back(); 
+            return redirect()->back();
         }
-         else{
-        \Cart::update(
-            $request->id,
-            [
-                'quantity' => [
-                    'relative' => false,
-                    'value' => $request->quantity
-                ],
-            ]
-        );
+        else{
+            \Cart::update(
+                $request->id,
+                [
+                    'quantity' => [
+                        'relative' => false,
+                        'value' => $request->quantity
+                    ],
+                ]
+            );
 
-        toastr()->success('Thành công', 'Cập nhật vào giỏ hàng thành công.');
+            toastr()->success('Thành công', 'Cập nhật vào giỏ hàng thành công.');
 
-        return redirect()->route('list-cart');
-    }
+            return redirect()->route('list-cart');
+        }
     }
 
     public function delete_cart(Request $request)
@@ -113,13 +113,13 @@ class CartController extends Controller
         {
             \Cart::remove($request->id);
             toastr()->success('Thành công', 'Xóa sản phẩm khỏi giỏ hàng thành công.');
-           return redirect()->route('homepage');
+            return redirect()->route('homepage');
         }
         else{
-        \Cart::remove($request->id);
-        toastr()->success('Thành công', 'Xóa sản phẩm khỏi giỏ hàng thành công.');
+            \Cart::remove($request->id);
+            toastr()->success('Thành công', 'Xóa sản phẩm khỏi giỏ hàng thành công.');
 
-        return redirect()->route('list-cart');
+            return redirect()->route('list-cart');
         }
     }
 
