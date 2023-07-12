@@ -22,30 +22,25 @@
         <div class="row">
             <div class="col-lg-3">
                    
-                <h4>Thông tin mua hàng:</h4>
+                <h4>Thông tin giao hàng:</h4>
                 <div class="row">
                    <div class="col-lg-12">
                     <label for="fir">Tên người nhận:</label>
-                   <h5><i>{{Auth::user()->name}}</i></h5>
-                   </div>
-                   <div class="col-lg-12">
-                    <label for="last">Email:</label>
-                    <h5><i>{{Auth::user()->email}}</i></h5>
+                    <h5><i>{{$order->recipient}}</i></h5> 
                    </div>
                    <div class="col-lg-12">
                     <label for="cun-name">Số điện thoại:</label>
-                    <h5><i>{{Auth::user()->phone}}</i></h5>
+                    <h5><i>{{$order->phone}}</i></h5> 
                    </div>
                    <div class="col-lg-12">
                     <label for="cun">Địa chỉ nhận hàng: </label>
-                    <h5><i>{{Auth::user()->address}}</i></h5>
+                    <h5><i>{{$order->address}}</i></h5> 
                    </div>
                 </div>
             </div>
             <div class="col-lg-9">
-                <h4 style="text-transform: uppercase"><b>Lịch sử mua hàng:</b></h4>
-                <p><i>Qúy khách chỉ được hủy đơn khi đơn hàng ở trạng thái chờ xác nhận.
-                    Và qúy khách vui lòng xác nhận đơn hàng khi đã nhận được hàng.</i></p>
+                <h4 style="text-transform: uppercase"><b>ĐƠN HÀNG: {{$order->order_code}}</b></h4>
+                <p><i>Qúy khách có thể đánh giá sản phẩm đã mua khi đơn hàng ở trạng thái đã hoàn thành.</i></p>
                 <p></p>
                 <p></p>
                     <div class="cart-table">
@@ -65,13 +60,13 @@
                                     @forelse ($orderdetail as $key=>$item)
                                     <tr>
                                         <td class="cart-pic first-row">
-                                            <a href="{{route('san-pham', $item->product->slug)}}">
-                                                 <img src="{{asset('uploads/product/'.$item->product->productImage[0]->path)}}" alt="" style="width:100px;height: 120px;">
+                                            <a href="{{route('san-pham', $item->productDetail->product->slug)}}">
+                                                 <img src="{{asset('uploads/product/'.$item->productDetail->product->productImage[0]->path)}}" alt="" style="width:100px;height: 120px;">
                                             </a>
                                         </td>
                                         <td class="cart-title first-row">
-                                            <h5>{{$item->product->name}}</h5>
-                                            <h5>Size: <b>{{$item->size}}</b></h5>
+                                            <h5>{{$item->productDetail->product->name}}</h5>
+                                            <h5>Size: <b>{{$item->productDetail->size->name}}</b></h5>
                                         </td>
                                        
                                         <td class="qua-col first-row">
@@ -79,7 +74,7 @@
                                         </td>
 
                                         <td class="p-price first-row">
-                                            {{number_format($item->product->price).',000'}} <sup>đ</sup>
+                                            {{number_format($item->productDetail->product->price).',000'}} <sup>đ</sup>
                                         </td>
                                         <td class="p-price first-row">{{number_format($item->sell_total).',000'}} <sup>đ</sup></td>
                                         @if ($order->order_status == 3)

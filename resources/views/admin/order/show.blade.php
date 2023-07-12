@@ -40,6 +40,7 @@
 
     <div class="row">
         <div class="col-md-12">
+            <h4>Mã đơn hàng: {{$order->order_code}}</h4>
             <div class="main-card mb-3 card">
                 <div class="card-body display_data">
 
@@ -66,12 +67,12 @@
                                                         <img style="height: 60px;"
                                                             data-toggle="tooltip" title="Image"
                                                             data-placement="bottom"
-                                                            src="{{asset('uploads/product/'.$item->product->productImage[0]->path)}}" alt="">
+                                                            src="{{asset('uploads/product/'.$item->productDetail->product->productImage[0]->path)}}" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="widget-content-left flex2">
-                                                    <div class="widget-heading">{{$item->product->name}}
-                                                        <br> <i>Size: {{$item->size}}</i>
+                                                    <div class="widget-heading">{{$item->productDetail->product->name}}
+                                                        <br> <i>Size: {{$item->productDetail->size->name}}</i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -81,7 +82,7 @@
                                         {{$item->sell_quantity}}
                                     </td>
                                     <td class="text-center"> 
-                                        {{number_format($item->product->price).',000'}} <sup>đ</sup>
+                                        {{number_format($item->productDetail->product->price).',000'}} <sup>đ</sup>
                                     </td>
                                     <td class="text-center">
                                         {{$item->sell_total}}.000 <sup>đ</sup>
@@ -108,21 +109,14 @@
                           Tên người nhận
                         </label>
                         <div class="col-md-9 col-xl-8">
-                            <p>{{$order->user->name}}</p>
-                        </div>
-                    </div>
-
-                    <div class="position-relative row form-group">
-                        <label for="email" class="col-md-3 text-md-right col-form-label">Email</label>
-                        <div class="col-md-9 col-xl-8">
-                            <p>{{$order->user->email}}</p>
+                            <p>{{$order->recipient}}</p>
                         </div>
                     </div>
 
                     <div class="position-relative row form-group">
                         <label for="phone" class="col-md-3 text-md-right col-form-label">Điện thoại</label>
                         <div class="col-md-9 col-xl-8">
-                            <p>{{$order->user->phone}}</p>
+                            <p>{{$order->phone}}</p>
                         </div>
                     </div>
 
@@ -130,7 +124,7 @@
                         <label for="street_address" class="col-md-3 text-md-right col-form-label">
                            Địa chỉ</label>
                         <div class="col-md-9 col-xl-8">
-                            <p>{{$order->user->address}}</p>
+                            <p>{{$order->address}}</p>
                         </div>
                     </div>
 
@@ -153,7 +147,9 @@
                             @elseif($order->order_status == 2)
                                Đang vận chuyển
                              @elseif($order->order_status == 3)
-                             Hoàn thành
+                             Đã hoàn thành
+                             @elseif($order->order_status == 5)
+                             Đã giao hàng
                             @else
                                 Hủy
                              @endif

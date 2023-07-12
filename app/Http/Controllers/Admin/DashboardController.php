@@ -25,9 +25,9 @@ class DashboardController extends Controller
     $user = User::where('level', 0)->count();
     $order_dahuy = Order::where('order_status', 4)->count();
     $order_ht = $order - $order_dahuy;
-    $ordernew = Order::with('orderDetail', 'user', 'payment')->where('order_status', 0)->orderBy('id','DESC')->paginate(10);
+    $ordernew = Order::with('orderDetail', 'user', 'payment')->where('order_status', 0)->orderBy('created_at','ASC')->paginate(10);
 
-    $product_view = Product::orderBy('view','DESC')->take(10)->get();
+    $product_view = Product::orderBy('view','DESC')->take(7)->get();
     $blog_view = Blog::orderBy('view','DESC')->take(10)->get();
 
     $revenue_today = Statistic::whereDate('order_date',date('Y-m-d'))->first();

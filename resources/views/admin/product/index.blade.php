@@ -211,6 +211,16 @@
 @endsection
 
 @section('script')
+    <script>
+        $(document).ready(function() {
+    $('#myTable').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+    </script>
     <script type="text/javascript">
         $('.status_choose').change(function(){
             var status_val = $(this).val();

@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Statistic;
 use App\Models\OrderDetails;
 use Illuminate\Http\Request;
+use App\Models\ProductDetail;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -17,11 +20,47 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     public function da_giao(Request $request, $id)
+     {
+        $data = $request->all();
+        $order =  Order::find($id);
+        $order->order_status = '5';
+        $order->order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $order->save();
+
+        $order_date = $order->order_date;
+        $statistic = Statistic::where('order_date', $order_date)->get();
+        if($statistic){
+            $statistic_count = $statistic->count();
+        }else{
+            $statistic_count = 0;
+        }
+
+        //update db statistic
+        if($statistic_count > 0){
+            $statistic_update = Statistic::where('order_date', $order_date)->first();
+            $statistic_update->sales = $statistic_update->sales + $order->sales*1000;
+            $statistic_update->profit = $statistic_update->profit + $order->profit*1000;
+            $statistic_update->total_order += 1;
+            $statistic_update->save();
+        }else{
+            $statistic_new = new Statistic();
+            $statistic_new->order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+            $statistic_new->sales = $order->sales*1000;
+            $statistic_new->profit = $order->profit*1000;
+            $statistic_new->total_order = '1';
+            $statistic_new->save();
+        }
+        toastr()->success('Thành công', 'Xác nhận giao hàng thành công.');
+        return redirect()->back();
+     }
+
      public function orderstatus_choose(Request $request)
      {
          $data = $request->all();
          $order = Order::find($data['order_id']);
          $order->order_status = $data['orderst_val'];
+        $order->admin_id = Auth::user()->id;
          $order->save();
      } 
 
@@ -33,7 +72,7 @@ class OrderController extends Controller
             $list = Order::with('orderDetail', 'user', 'payment')->whereDate('created_at', $date)->orderBy('id','ASC')->get();
         }
         if(isset($request->status)){
-            $list = Order::with('orderDetail', 'user', 'payment')->where('order_status', $request->status)->orderBy('id','ASC')->get();
+            $list = Order::with('orderDetail', 'user', 'payment')->where('order_status', $request->status)->orderBy('created_at','ASC')->get();
         }
         if($request->date && $request->status){
                 $list = Order::with('orderDetail', 'user', 'payment')->whereDate('created_at', $request->date)->where('order_status', $request->status)->orderBy('id','ASC')->get();
@@ -118,6 +157,15 @@ class OrderController extends Controller
         }
         $order->order_status = '4';
         $order->save();
+
+        $order_detail = OrderDetails::with('order', 'product')->where('order_id', $id)->get();
+        foreach($order_detail as $items){
+            $sell_quantity = $items->sell_quantity;
+
+            //cong so luong sp da huy vao kho
+            $qty = ProductDetail::where('id', $items->product_detail_id)->increment('quantity', $sell_quantity);
+        };
+        
         toastr()->info('Thành công', 'Hủy đơn hàng thành công.');
         return redirect()->back();
     }

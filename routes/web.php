@@ -52,8 +52,6 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::resource('/size', SizeController::class);
 
-    Route::resource('/color', ColorController::class);
-
     Route::resource('/product', ProductController::class);
     Route::get('product-image/{product_image_id}/delete', [ProductController::class, 'destroyImage']);
     Route::get('/product-status-choose', [ProductController::class, 'status_choose'])->name('product-status-choose');
@@ -70,6 +68,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
       Route::resource('/order', OrderController::class);
       Route::get('/order-filter', [OrderController::class, 'filter'])->name('order-filter');
       Route::get('/status-choose', [OrderController::class, 'orderstatus_choose'])->name('orderst-choose');
+      Route::put('/da-giao/{id}', [OrderController::class, 'da_giao'])->name('da-giao');
 
 });
 

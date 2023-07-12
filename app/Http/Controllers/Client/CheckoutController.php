@@ -99,6 +99,9 @@ class CheckoutController extends Controller
                 'customer_id' => auth()->user()->id,
                 'order_status' => '0',
                 'order_code' => $checkout_code,
+                'recipient' => $request->recipient,
+                'phone' => $request->phone,
+                'address' => $request->address,
                 'sales' => \Cart::getTotal(),
                 'profit' => $request->loinhuan,
                 'order_date' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d'),
@@ -111,8 +114,7 @@ class CheckoutController extends Controller
             foreach($cartitems as $items){
                 $orderItem = OrderDetails::create([
                     'order_id' => $order->id,
-                    'product_id' => $items->attributes->id,
-                    'size' => $items->attributes->size,
+                    'product_detail_id' => $items->attributes->product_detail_id,
                     'sell_quantity' => $items->quantity,
                     'sell_total' => $items->quantity*$items->price,
                 ]);
@@ -171,6 +173,9 @@ class CheckoutController extends Controller
                 'customer_id' => auth()->user()->id,
                 'order_status' => '3',
                 'order_code' => $checkout_code,
+                'recipient' => $request->recipient,
+                'phone' => $request->phone,
+                'address' => $request->address,
                 'sales' => \Cart::getTotal(),
                 'profit' => $request->loinhuan,
                 'order_date' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d'),
@@ -206,6 +211,9 @@ class CheckoutController extends Controller
                 'customer_id' => auth()->user()->id,
                 'order_status' => '0',
                 'order_code' => $checkout_code,
+                'recipient' => $request->recipient,
+                'phone' => $request->phone,
+                'address' => $request->address,
                 'sales' => \Cart::getTotal(),
                 'profit' => $request->loinhuan,
                 'payment_id' => '1',
@@ -218,9 +226,7 @@ class CheckoutController extends Controller
         foreach($cartitems as $items){
             $orderItem = OrderDetails::create([
                 'order_id' => $order->id,
-                'product_id' => $items->attributes->id,
                 'product_detail_id' => $items->attributes->product_detail_id,
-                'size' => $items->attributes->size,
                 'sell_quantity' => $items->quantity,
                 'sell_total' => $items->quantity*$items->price,
             ]);

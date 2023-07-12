@@ -20,30 +20,7 @@
   <div class="shopping-cart spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
-                   
-                <h4>Thông tin đơn hàng:</h4>
-                <p></p>
-                <div class="row">
-                   <div class="col-lg-12">
-                    <label for="fir">Tên người nhận:</label>
-                   <h5><i>{{Auth::user()->name}}</i></h5>
-                   </div>
-                   <div class="col-lg-12">
-                    <label for="last">Email:</label>
-                    <h5><i>{{Auth::user()->email}}</i></h5>
-                   </div>
-                   <div class="col-lg-12">
-                    <label for="cun-name">Số điện thoại:</label>
-                    <h5><i>{{Auth::user()->phone}}</i></h5>
-                   </div>
-                   <div class="col-lg-12">
-                    <label for="cun">Địa chỉ nhận hàng: </label>
-                    <h5><i>{{Auth::user()->address}}</i></h5>
-                   </div>
-                </div>
-            </div>
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 <h4 style="text-transform: uppercase"><b>Lịch sử mua hàng:</b></h4>
                 <p></p>
                 <p><i>Qúy khách chỉ được hủy đơn khi đơn hàng ở trạng thái chờ xác nhận.
@@ -121,8 +98,8 @@
                         {!!$order->links("pagination::bootstrap-4")!!}
                         </div>
                     <div class="row">
-                        <div class="col-lg-4">
-                            <div class="cart-buttons">
+                        <div class="col-lg-12">
+                            <div class="cart-buttons" style="text-align:center">
                                 <a href="{{route('shop')}}" class="primary-btn up-cart">Tiếp tục dạo shop</a>
                             </div>
                         </div>

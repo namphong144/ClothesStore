@@ -260,7 +260,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
     $('#myTable').DataTable( {
         dom: 'Bfrtip',
@@ -269,7 +269,8 @@
         ]
     } );
 } );
-    </script>
+    </script> --}}
+
 <script type="text/javascript">
     function ChangeToSlug()
         {
@@ -317,10 +318,15 @@
                   },
                   success: function(data) {
                      alert('Thay đổi thành công!');
+                     setTimeout(
+                  function() 
+                  {
+                     location.reload();
+                  }, 0001); 
                   }
               });
         })
-  </script>
+    </script>
 
 <script>
     $( function() {
