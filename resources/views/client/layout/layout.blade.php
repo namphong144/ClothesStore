@@ -4,11 +4,11 @@
 <head>
     <base href="{{asset('/')}}">
     <meta charset="UTF-8">
-    <meta name="description" content="codelean Template">
-    <meta name="keywords" content="codelean, unica, creative, html">
+    <meta name="description" content="PPSTYLE Store">
+    <meta name="keywords" content="clothes, women, men">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PPSTYPE | @yield('title')</title>
+    <title>PPSTYLE | @yield('title')</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -125,116 +125,116 @@
 <script src="{{asset('front/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('front/js/main.js')}}"></script>
 <script src="{{asset('front/js/sweetalert.min.js')}}"></script>
-<script type="text/javascript">
-    $(document).ready(function (){
-        $('.send_order').click(function (){
-            swal({
-                    title: "Xác nhận đơn đặt hàng",
-                    text: "Đơn hàng sẽ không được hoàn tác khi đặt, bạn có muốn đặt không?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Có, đặt hàng",
-                    cancelButtonText: "Không, hủy đặt hàng",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                },
-                function(isConfirm) {
-                    if (isConfirm) {
-                        var shipping_name = $('.shipping_name').val();
-                        var shipping_address = $('.shipping_address').val();
-                        var shipping_email = $('.shipping_email').val();
-                        var shipping_phone = $('.shipping_phone').val();
-                        var shipping_notes = $('.shipping_notes').val();
-                        var shipping_payment = $('.payment_select').val();
-                        var _token = $('input[name="_token"]').val();
-                        $.ajax({
-                            url: '{{url('/confirm-order')}}',
-                            method: 'POST',
-                            data: {
-                                shipping_name: shipping_name,
-                                shipping_address: shipping_address,
-                                shipping_email: shipping_email,
-                                shipping_phone: shipping_phone,
-                                shipping_notes: shipping_notes,
-                                shipping_payment: shipping_payment,
-                                _token: _token
-                            },
-                            success: function () {
-                                swal("Đơn hàng", "Đơn hàng của bạn đã đặt thành công.", "success");
-                            }
-                        });
-                        window.setTimeout(function () {
-                            location.reload();
-                        }, 3000);
+{{--<script type="text/javascript">--}}
+{{--    $(document).ready(function (){--}}
+{{--        $('.send_order').click(function (){--}}
+{{--            swal({--}}
+{{--                    title: "Xác nhận đơn đặt hàng",--}}
+{{--                    text: "Đơn hàng sẽ không được hoàn tác khi đặt, bạn có muốn đặt không?",--}}
+{{--                    type: "warning",--}}
+{{--                    showCancelButton: true,--}}
+{{--                    confirmButtonClass: "btn-danger",--}}
+{{--                    confirmButtonText: "Có, đặt hàng",--}}
+{{--                    cancelButtonText: "Không, hủy đặt hàng",--}}
+{{--                    closeOnConfirm: false,--}}
+{{--                    closeOnCancel: false--}}
+{{--                },--}}
+{{--                function(isConfirm) {--}}
+{{--                    if (isConfirm) {--}}
+{{--                        var shipping_name = $('.shipping_name').val();--}}
+{{--                        var shipping_address = $('.shipping_address').val();--}}
+{{--                        var shipping_email = $('.shipping_email').val();--}}
+{{--                        var shipping_phone = $('.shipping_phone').val();--}}
+{{--                        var shipping_notes = $('.shipping_notes').val();--}}
+{{--                        var shipping_payment = $('.payment_select').val();--}}
+{{--                        var _token = $('input[name="_token"]').val();--}}
+{{--                        $.ajax({--}}
+{{--                            url: '{{url('/confirm-order')}}',--}}
+{{--                            method: 'POST',--}}
+{{--                            data: {--}}
+{{--                                shipping_name: shipping_name,--}}
+{{--                                shipping_address: shipping_address,--}}
+{{--                                shipping_email: shipping_email,--}}
+{{--                                shipping_phone: shipping_phone,--}}
+{{--                                shipping_notes: shipping_notes,--}}
+{{--                                shipping_payment: shipping_payment,--}}
+{{--                                _token: _token--}}
+{{--                            },--}}
+{{--                            success: function () {--}}
+{{--                                swal("Đơn hàng", "Đơn hàng của bạn đã đặt thành công.", "success");--}}
+{{--                            }--}}
+{{--                        });--}}
+{{--                        window.setTimeout(function () {--}}
+{{--                            location.reload();--}}
+{{--                        }, 3000);--}}
 
-                    } else {
-                        swal("Đóng", "Đơn hàng chưa được gửi, vui lòng hoàn tất đơn hàng", "error");
-                    }
-                });
-        });
-    });
-</script>
-<script type="text/javascript">
-    hover_cart();
-    show_cart();
-    function hover_cart(){
-        $.ajax({
-            url: '{{url('/hover-cart')}}',
-            method: 'GET',
-            success: function (data) {
-                $('#giohang-hover').html(data);
+{{--                    } else {--}}
+{{--                        swal("Đóng", "Đơn hàng chưa được gửi, vui lòng hoàn tất đơn hàng", "error");--}}
+{{--                    }--}}
+{{--                });--}}
+{{--        });--}}
+{{--    });--}}
+{{--</script>--}}
+{{--<script type="text/javascript">--}}
+{{--    hover_cart();--}}
+{{--    show_cart();--}}
+{{--    function hover_cart(){--}}
+{{--        $.ajax({--}}
+{{--            url: '{{url('/hover-cart')}}',--}}
+{{--            method: 'GET',--}}
+{{--            success: function (data) {--}}
+{{--                $('#giohang-hover').html(data);--}}
 
-            }
-        });
-    }
+{{--            }--}}
+{{--        });--}}
+{{--    }--}}
 
-    function show_cart() {
-        $.ajax({
-            url: '{{url('/show-cart')}}',
-            method: 'GET',
-            success: function (data) {
-                $('#show-cart').html(data);
+{{--    function show_cart() {--}}
+{{--        $.ajax({--}}
+{{--            url: '{{url('/show-cart')}}',--}}
+{{--            method: 'GET',--}}
+{{--            success: function (data) {--}}
+{{--                $('#show-cart').html(data);--}}
 
-            }
-        });
-    }
-    $(document).ready(function (){
-        $('.add-to-cart').click(function (){
-            var id= $(this).data('id_product');
-            var cart_product_id = $('.cart_product_id_' + id).val();
-            var cart_product_name = $('.cart_product_name_' + id).val();
-            var cart_product_image = $('.cart_product_image_' + id).val();
-            var cart_product_price = $('.cart_product_price_' + id).val();
-            var cart_product_qty = $('.cart_product_qty_' + id).val();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url: '{{url('/add-cart-ajax')}}',
-                method: 'POST',
-                data:{cart_product_id:cart_product_id, cart_product_name:cart_product_name, cart_product_image:cart_product_image,
-                    cart_product_price:cart_product_price, cart_product_qty:cart_product_qty, _token:_token },
-                success:function (data){
-                    swal({
-                            title: "Đã thêm sản phẩm vào giỏ hàng",
-                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
-                            showCancelButton: true,
-                            cancelButtonText: "Xem tiếp",
-                            confirmButtonClass: "btn-success",
-                            confirmButtonText: "Đi đến giỏ hàng",
-                            closeOnConfirm: false
-                        },
-                        function() {
-                            window.location.href = "{{url('/cart')}}";
-                        });
-                    show_cart();
-                    hover_cart();
+{{--            }--}}
+{{--        });--}}
+{{--    }--}}
+{{--    $(document).ready(function (){--}}
+{{--        $('.add-to-cart').click(function (){--}}
+{{--            var id= $(this).data('id_product');--}}
+{{--            var cart_product_id = $('.cart_product_id_' + id).val();--}}
+{{--            var cart_product_name = $('.cart_product_name_' + id).val();--}}
+{{--            var cart_product_image = $('.cart_product_image_' + id).val();--}}
+{{--            var cart_product_price = $('.cart_product_price_' + id).val();--}}
+{{--            var cart_product_qty = $('.cart_product_qty_' + id).val();--}}
+{{--            var _token = $('input[name="_token"]').val();--}}
+{{--            $.ajax({--}}
+{{--                url: '{{url('/add-cart-ajax')}}',--}}
+{{--                method: 'POST',--}}
+{{--                data:{cart_product_id:cart_product_id, cart_product_name:cart_product_name, cart_product_image:cart_product_image,--}}
+{{--                    cart_product_price:cart_product_price, cart_product_qty:cart_product_qty, _token:_token },--}}
+{{--                success:function (data){--}}
+{{--                    swal({--}}
+{{--                            title: "Đã thêm sản phẩm vào giỏ hàng",--}}
+{{--                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",--}}
+{{--                            showCancelButton: true,--}}
+{{--                            cancelButtonText: "Xem tiếp",--}}
+{{--                            confirmButtonClass: "btn-success",--}}
+{{--                            confirmButtonText: "Đi đến giỏ hàng",--}}
+{{--                            closeOnConfirm: false--}}
+{{--                        },--}}
+{{--                        function() {--}}
+{{--                            window.location.href = "{{url('/cart')}}";--}}
+{{--                        });--}}
+{{--                    show_cart();--}}
+{{--                    hover_cart();--}}
 
-                }
-            });
-        });
+{{--                }--}}
+{{--            });--}}
+{{--        });--}}
 
-    });
-</script>
+{{--    });--}}
+{{--</script>--}}
 
 <script type="text/javascript">
     $(document).ready(function(){

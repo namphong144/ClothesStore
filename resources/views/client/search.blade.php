@@ -59,8 +59,8 @@
                                             <i class="icon_heart_alt"></i>
                                         </div>
                                         <ul>
-                                            <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="{{route('san-pham', $prod->slug)}}">+ Quick View</a></li>
+{{--                                            <li class="w-icon active"><a href=""><i class="icon_bag_alt"></i></a></li>--}}
+                                            <li class="quick-view"><a href="{{route('san-pham', $prod->slug)}}">+ Xem chi tiết</a></li>
                                             <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
                                         </ul>
                                     </div>
@@ -71,12 +71,12 @@
                                         </a>
                                         <div class="product-price">
                                             @if ($prod->discount)
-                                                {{$prod->discount}}.000 <sup>đ</sup>
+                                                {{number_format($prod->discount).',000'}} <sup>đ</sup>
                                                 @else
-                                                {{$prod->price}}.000 <sup>đ</sup>
+                                                {{number_format($prod->price).',000'}} <sup>đ</sup>
                                             @endif
                                             @if ($prod->discount)
-                                            <span> {{$prod->price}}.000 <sup>đ</sup></span>
+                                            <span>{{number_format($prod->price).',000'}} <sup>đ</sup></span>
                                         @endif
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
         $( "#slider-range" ).slider({
       orientation: "horizontal",
       range: true,
-      min: {{$min_price}}, 
+      min: {{$min_price}},
       max: {{$max_price}},
       values: [ {{$min_price}}, {{$max_price}} ],
       slide: function( event, ui ) {

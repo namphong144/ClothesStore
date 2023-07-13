@@ -6,18 +6,17 @@
     <meta charset="utf-8">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="{{ csrf_token() }}">
-      
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>PPSTYPE Shop - @yield('title')</title>
+    <title>PPSTYLE Shop - @yield('title')</title>
     <meta property="og:image" content="public/dashboard/assets/images/logo1.png" />
     <meta property="og:image:width" content="300" />
     <meta property="og:image:height" content="55" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <meta name="description"
-        content="This is an example dashboard (CodeLean) created using build-in elements and components.">
+    <meta name="description" content="PPSTYLE Store">
 
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -102,14 +101,14 @@
                                                     <div class="menu-header-content text-left">
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
-                                                               
+
                                                                 <div class="widget-content-left">
                                                                     <div class="widget-heading">{{ Auth::user()->name }}</div>
                                                                     {{-- <div class="widget-subheading opacity-8">A short
                                                                         profile description</div> --}}
                                                                 </div>
                                                                 <div class="widget-content-right mr-2">
-                                                                    
+
                                                                     <a href="{{ route('logout') }}"
                                                                     onclick="event.preventDefault();
                                                                                   document.getElementById('logout-form').submit();"><button
@@ -123,7 +122,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                           
+
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +131,7 @@
                                     <div class="widget-subheading"> @if ( Auth::user()->level == 0)
                                         {{ __('Staff') }}
                                        @else
-                                       
+
                                        {{ __('Manager') }}
                                     @endif </div>
                                 </div>
@@ -234,12 +233,12 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
     <div class="app-drawer-overlay d-none animated fadeIn"></div>
-    
+
     <script src="dashboard/assets/scripts/jquery-3.2.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
@@ -275,8 +274,8 @@
     function ChangeToSlug()
         {
             var slug;
-         
-            //Lấy text từ thẻ input title 
+
+            //Lấy text từ thẻ input title
             slug = document.getElementById("slug").value;
             slug = slug.toLowerCase();
             //Đổi ký tự có dấu thành không dấu
@@ -304,7 +303,7 @@
             document.getElementById('convert_slug').value = slug;
         }
     </script>
-    
+
      <script type="text/javascript">
         $('.orderst_choose').change(function(){
           var orderst_val = $(this).val();
@@ -319,10 +318,10 @@
                   success: function(data) {
                      alert('Thay đổi thành công!');
                      setTimeout(
-                  function() 
+                  function()
                   {
                      location.reload();
-                  }, 0001); 
+                  }, 0001);
                   }
               });
         })
@@ -330,8 +329,8 @@
 
 <script>
     $( function() {
-    $( "#datepicker" ).datepicker({ 
-        dateFormat: 'yy-mm-dd',     
+    $( "#datepicker" ).datepicker({
+        dateFormat: 'yy-mm-dd',
     });
     $( "#datepicker2" ).datepicker({
         // prevText: "Tháng trước",
@@ -347,13 +346,13 @@
         $(document).ready(function() {
         chart60daysorder();
         var chart = new Morris.Line({
-       
+
         element: 'myfirstchart',
         //option chart
         lineColors: ['#819C79', '#fc8710', 'FF6541', '#A4ADD3', '#766B56'],
         parseTime: false,
        // hideHover: auto,
-       
+
        xkey: 'period',
 
         ykeys: ['order', 'sales', 'profit'],
@@ -395,7 +394,7 @@
 
         $('#btn-dashboard-filter').click(function() {
         var _token = $('input[name="_token"]').val();
-        
+
         var from_date = $('#datepicker').val();
         var to_date = $('#datepicker2').val();
         $.ajax({

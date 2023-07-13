@@ -18,8 +18,8 @@
             @foreach ($brand as $key=>$bra)
             <div class="bc-item">
                 <label for="bc- {{$bra->id}}">
-                   {{$bra->name}} 
-                   <input type="checkbox" 
+                   {{$bra->name}}
+                   <input type="checkbox"
                    {{(request("brand")[$bra->id] ?? '') == 'on' ? 'checked':'' }}
                    id="bc- {{$bra->id}}" name="brand[{{$bra->id}}]" onchange="this.form.submit();">
                     <span class="checkmark"></span>
@@ -36,12 +36,12 @@
             <input type="hidden" id="start_price" name="start_price">
             <input type="hidden" id="end_price" name="end_price">
             <div id="slider-range" style="height:10px;color:#f6931f;">
-                
+
              </div>
         </div>
-        <button type="submit" class="filter-btn">Filter</button>
+        <button type="submit" class="filter-btn">Lọc</button>
     </div>
-  
+
     {{-- <div class="filter-widget">
         <h4 class="fw-title">Size</h4>
         <div class="fw-size-choose">
@@ -64,16 +64,16 @@
          </div>
     </div> --}}
 
-    <div class="filter-widget">
-        <h4 class="fw-title">Tags</h4>
-        <div class="fw-tags">
-            <a href="#">Towel</a>
-            <a href="#">Shoes</a>
-            <a href="#">Coat</a>
-            <a href="#">Dresses</a>
-            <a href="#">Trousers</a>
-            <a href="#">Men's hats</a>
-            <a href="#">Backpack</a>
-        </div>
-    </div>
+{{--    <div class="filter-widget">--}}
+{{--        <h4 class="fw-title">Tags</h4>--}}
+{{--        <div class="fw-tags">--}}
+{{--            <a href="#">Towel</a>--}}
+{{--            <a href="#">Shoes</a>--}}
+{{--            <a href="#">Coat</a>--}}
+{{--            <a href="#">Dresses</a>--}}
+{{--            <a href="#">Trousers</a>--}}
+{{--            <a href="#">Men's hats</a>--}}
+{{--            <a href="#">Backpack</a>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 </form>
