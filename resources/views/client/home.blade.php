@@ -105,7 +105,7 @@
                                 </ul>
                             </div>
                             <div class="pi-text">
-                                <div class="category-name">Coat</div>
+                                <div class="category-name">{{$nu->brand->name}}</div>
                                 <a href="{{route('san-pham', $nu->slug)}}">
                                     <h5>{{$nu->name}}</h5>
                                 </a>
