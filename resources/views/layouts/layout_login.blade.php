@@ -7,10 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Login | Admin - CodeLean eShop</title>
+    <title>Login | Admin - PPSTYLE</title>
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <meta name="description" content="CodeLean Design">
+    <meta name="description" content="PPSTYLE Shop">
 
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -28,13 +28,13 @@
                         <div class="modal-dialog w-100 mx-auto">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                   
+
 
                                     @yield('content')
-                                    
+
                                 </div>
                             </div>
-                            <div class="text-center text-white opacity-8 mt-3">Copyright © CodeLean 2022</div>
+                            <div class="text-center text-white opacity-8 mt-3">Copyright © PPSTYLE 2023</div>
                         </div>
                     </div>
                 </div>
@@ -42,5 +42,5 @@
         </div>
         <script type="text/javascript" src="{{asset('.dashboard/assets/scripts/main.js')}}"></script>
     </body>
-    
+
     </html>
