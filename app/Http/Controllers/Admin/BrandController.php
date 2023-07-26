@@ -115,6 +115,11 @@ class BrandController extends Controller
         $brand->name = $data['name'];
         $brand->status = $data['status'];
         $brand->save();
+        if($brand->status == 1){
+            $productstatus = Product::whereIn('brand_id', [$brand->id])->increment('status', 1);
+        }elseif($brand->status == 0){
+            $productstatus = Product::whereIn('brand_id', [$brand->id])->decrement('status', 1);
+        }
         toastr()->success('Thành công', 'Cập nhật thương hiệu thành công.');
         return redirect()->route('brand.index');
     }
@@ -129,10 +134,8 @@ class BrandController extends Controller
     {
         //
         $brand = Brand::find($id);
-
-    //     if($category->product){
-    //         $product = Product::whereIn('brand_id', [$brand->id])->delete();
-    // }
+        //xoá sp thuộc brand
+        // $product = Product::whereIn('brand_id', [$brand->id])->delete();
         $brand->delete();
         toastr()->info('Thành công', 'Xóa thương hiệu thành công.');
         return redirect()->back();

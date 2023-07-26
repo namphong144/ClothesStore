@@ -114,6 +114,11 @@ class ProductCategoryController extends Controller
         $category->slug = $data['slug'];
         $category->status = $data['status'];
         $category->save();
+        if($category->status == 1){
+            $productstatus = Product::whereIn('category_id', [$category->id])->increment('status', 1);
+        }elseif($category->status == 0){
+            $productstatus = Product::whereIn('category_id', [$category->id])->decrement('status', 1);
+        }
         toastr()->success('Thành công', 'Cập nhật danh mục thành công.');
         return redirect()->route('category.index');
     }
@@ -128,10 +133,8 @@ class ProductCategoryController extends Controller
     {
         //
         $category = ProductCategory::find($id);
-
-    //     if($category->product){
-    //         $product = Product::whereIn('product_category_id', [$category->id])->delete();
-    // }
+        //xoá sp thuộc danh mục
+        //$product = Product::whereIn('category_id', [$category->id])->delete();
         $category->delete();
         toastr()->info('Thành công', 'Xóa danh mục thành công.');
         return redirect()->back();
